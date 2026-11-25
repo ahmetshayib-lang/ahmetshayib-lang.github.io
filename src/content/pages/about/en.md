@@ -1,36 +1,36 @@
 ---
 title: About
-lead: I work on projects across writing and publishing, cultural and humanitarian initiatives, intellectual content, and engineering.
-description: About Ahmad Shuaib — background, interests, creative and intellectual direction, and approach to building projects.
+profile: Civil Engineer, Content Creator, and Founder of Creative Projects and Cultural and Social Initiatives.
+vision: Developing ideas and transforming them into projects that create value and make an impact.
+visionNote: A reader who closes a book with a question worth keeping. A participant who finds a role in an initiative. Content that reaches the people it was made for. That is the kind of impact I work towards.
+description: Ahmad Shuaib — Civil Engineer, Content Creator, and Founder of Creative Projects and Cultural and Social Initiatives.
+areas:
+  - title: Cultural & social initiatives
+    text: What We Carry, an initiative on Syrian identity, belonging and collective memory, with two completed books.
+    href: /projects/what-we-carry/
+  - title: Publications
+    text: Four completed books, from reflective non-fiction to a story for children.
+    href: /publications/
+  - title: Content creation
+    text: Cultural, social and intellectual content under the متّة ومعنى identity — familiar subjects, seen from another angle.
+    href: /projects/mattah-wa-maana/
+  - title: Creative projects
+    text: Every idea in the form that suits it — a book, a story, a content identity or an initiative.
+    href: /projects/
+# Academic background: kept for the future, not shown on the site while published is false.
+academic:
+  published: false
+  entries: []
 ---
 
-## Introduction
+## Who I am
 
-<p class="placeholder">To be completed: a personal introduction in your own words — who you are, where you started, and what connects your projects.</p>
+My work moves between fields that can look far apart — civil engineering, content creation, writing, and cultural and social work. What connects them is an interest in ideas: how they take shape, how they are tested, and how they become something real.
 
-## Academic background
+So I don't think of these as separate tracks. They are different ways of doing the same work: giving an idea the time it needs, then finding the form that carries it to people.
 
-A background in **civil engineering**.
+## Ideas first, then form
 
-<p class="placeholder">To be completed: university, degree, year and specialisation — if you wish to include them.</p>
+My work starts with a question rather than a format. A question about how we perceive reality became the book *From Another Angle*. A question about what Syrians carry of their country became *What We Carry* — an initiative with two books, one for adults and one for children.
 
-## Interests
-
-- Writing and publishing.
-- Cultural and social initiatives.
-- Creative media and content.
-- Intellectual projects.
-- Academic and engineering work.
-- Humanitarian and community projects.
-
-## Creative and intellectual direction
-
-<p class="placeholder">To be completed: the questions that drive you, and what you want your projects to leave with their readers.</p>
-
-## How I build projects
-
-<p class="placeholder">To be completed: how an idea begins, how it becomes a project, and who you work with.</p>
-
-## Vision
-
-<p class="placeholder">To be completed: where you want this platform to go in the coming years.</p>
+What matters to me is that the idea stays clear, and that each project takes the shape that serves it best: a book, a story, a body of content, or an initiative.

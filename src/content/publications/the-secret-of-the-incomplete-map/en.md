@@ -1,17 +1,22 @@
 ---
-title: The Secret of the Map That Is Never Complete
+title: The Secret of the Incomplete Map
 altTitle: سرّ الخريطة التي لا تكتمل
-summary: A children's story from the What We Carry initiative.
+summary: A completed children's story from the What We Carry initiative.
 type: children
-status: in-preparation
+audience: Children
+status: complete
 project: what-we-carry
 order: 2
-coverStyle: wwc
-description: سرّ الخريطة التي لا تكتمل — a children's story from the What We Carry initiative.
+featured: true
+cover: ./cover.jpg
+coverAlt: Cover of سرّ الخريطة التي لا تكتمل (The Secret of the Incomplete Map) — two children in an attic open an inlaid box and read a map, while a round window looks out on Syrian landscapes.
+description: The Secret of the Incomplete Map (سرّ الخريطة التي لا تكتمل) is a completed children's story from the What We Carry initiative.
 ---
 
 ## About the story
 
-*سرّ الخريطة التي لا تكتمل* is the children's story within the **What We Carry** initiative, which explores Syrian identity, belonging and collective memory.
+*The Secret of the Incomplete Map* is the children's story within the **What We Carry** initiative, which explores Syrian identity, belonging and collective memory. It carries the initiative's questions to its youngest readers.
 
-<p class="placeholder">To be completed: story synopsis, age group, illustrations, available languages and release date. The English title is a working translation.</p>
+## The cover
+
+Two children in an attic open an inlaid wooden box and read a map, with a hoopoe perched on its edge. Through the round window behind them are landscapes of Syria: a snow-capped mountain, wheat fields, a hilltop castle and water wheels on a river.

@@ -1,21 +1,21 @@
 ---
-title: Mate & Meaning
+title: Mattah wa Maʿna
 altTitle: متّة ومعنى
-summary: A cultural, social and intellectual content identity that looks at familiar things from different angles — social assumptions, cultural issues, human behaviour and everyday questions.
+summary: A cultural, social and intellectual content identity that looks at the familiar from another angle — social assumptions, cultural issues, human behaviour and everyday questions.
 category: content
 status: ongoing
 languages: [ar]
-order: 4
+order: 2
 featured: true
 initiative: true
 coverStyle: mattah
 relatedPublications: [from-another-angle]
-description: Mate & Meaning (متّة ومعنى) is a cultural, social and intellectual content identity that looks at familiar subjects from different angles.
+description: Mattah wa Maʿna (متّة ومعنى) is a cultural, social and intellectual content identity that looks at familiar subjects from another angle. The book From Another Angle belongs to it.
 ---
 
 ## A calm conversation around a question
 
-*Mate & Meaning* (متّة ومعنى) is both a content project and a creative media identity. Think of a quiet gathering over a cup of mate: a warm conversation that doesn't stop at the surface.
+*Mattah wa Maʿna* (متّة ومعنى — literally “mate and meaning”) is both a content project and a creative media identity. Think of a quiet gathering over a cup of mate: a warm conversation that doesn't stop at the surface.
 
 ## What it explores
 
@@ -25,10 +25,6 @@ description: Mate & Meaning (متّة ومعنى) is a cultural, social and inte
 - **Everyday intellectual questions.**
 - **Different ways of looking** at familiar subjects.
 
-## From Mate & Meaning
+## From Mattah wa Maʿna
 
-The book *From Another Angle* is published under this imprint.
-
-## Where to find it
-
-<p class="placeholder">To be completed: platform links (YouTube, Instagram, podcast…) and examples of published content. The English name is a working translation.</p>
+The book **From Another Angle** belongs to this identity: a journey through the ideas we live by without noticing.
