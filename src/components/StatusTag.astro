@@ -1,0 +1,9 @@
+---
+import { statuses, type Lang } from '@/i18n/ui';
+interface Props {
+  lang: Lang;
+  status: keyof typeof statuses;
+}
+const { lang, status } = Astro.props;
+---
+<span class:list={['tag', `tag-${status}`]}>{statuses[status][lang]}</span>

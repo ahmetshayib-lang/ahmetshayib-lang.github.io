@@ -1,0 +1,31 @@
+---
+import Cover from './Cover.astro';
+import StatusTag from './StatusTag.astro';
+import { localizePath, num, list } from '@/i18n/utils';
+import { projectCategories, languageNames, type Lang } from '@/i18n/ui';
+import type { Localized } from '@/lib/content';
+
+interface Props {
+  lang: Lang;
+  project: Localized<'projects'>;
+  index: number;
+  size?: 'default' | 'wide' | 'half';
+  eager?: boolean;
+}
+const { lang, project, index, size = 'default', eager = false } = Astro.props;
+const d = project.data;
+const kicker = `${num(lang, index, 2)} · ${projectCategories[d.category][lang]}`;
+const langs = d.languages.map((l) => languageNames[l][lang]);
+---
+<a class:list={['card', size === 'wide' && 'card-wide', size === 'half' && 'card-half']} href={localizePath(lang, `/projects/${project.slug}/`)}>
+  <Cover lang={lang} title={d.title} altTitle={d.altTitle} kicker={kicker} style={d.coverStyle} image={d.cover} imageAlt={d.coverAlt} shape={size === 'wide' ? 'wide' : 'default'} eager={eager} />
+  <div class="card-body">
+    <h3>{d.title}</h3>
+    {d.altTitle && <div class="alt" lang={lang === 'ar' ? 'en' : 'ar'}>{d.altTitle}</div>}
+    <p>{d.summary}</p>
+    <div class="card-meta">
+      <StatusTag lang={lang} status={d.status} />
+      {langs.length > 1 && <span class="label">{list(lang, langs)}</span>}
+    </div>
+  </div>
+</a>

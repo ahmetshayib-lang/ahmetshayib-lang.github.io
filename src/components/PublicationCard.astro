@@ -1,0 +1,22 @@
+---
+import Cover from './Cover.astro';
+import StatusTag from './StatusTag.astro';
+import { localizePath } from '@/i18n/utils';
+import { publicationTypes, type Lang } from '@/i18n/ui';
+import type { Localized } from '@/lib/content';
+
+interface Props {
+  lang: Lang;
+  pub: Localized<'publications'>;
+}
+const { lang, pub } = Astro.props;
+const d = pub.data;
+---
+<a class="pub" href={localizePath(lang, `/publications/${pub.slug}/`)}>
+  <Cover lang={lang} title={d.title} altTitle={d.altTitle} kicker={publicationTypes[d.type][lang]} style={d.coverStyle} image={d.cover} imageAlt={d.coverAlt} shape="book" />
+  <div>
+    <h3>{d.title}</h3>
+    {d.subtitle && <p class="sub">{d.subtitle}</p>}
+    <div class="card-meta"><StatusTag lang={lang} status={d.status} /></div>
+  </div>
+</a>

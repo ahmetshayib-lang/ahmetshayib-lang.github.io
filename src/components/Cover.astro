@@ -1,0 +1,56 @@
+---
+/**
+ * Project / publication cover.
+ * With an image: an optimized responsive image.
+ * Without: a typographic cover in one of the art-directed styles.
+ */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import type { Lang } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  altTitle?: string;
+  kicker?: string;
+  style?: 'wwc' | 'angle' | 'life' | 'mattah' | 'eng' | 'plain';
+  image?: ImageMetadata;
+  imageAlt?: string;
+  shape?: 'default' | 'wide' | 'book';
+  eager?: boolean;
+  /** Decorative when the same title is printed right next to the cover. */
+  decorative?: boolean;
+}
+const { lang, title, altTitle, kicker, style = 'plain', image, imageAlt = '', shape = 'default', eager = false, decorative = true } =
+  Astro.props;
+const shapeClass = shape === 'wide' ? 'cover-wide' : shape === 'book' ? 'cover-book' : '';
+const sizes =
+  shape === 'wide' ? '(max-width: 980px) 100vw, 66vw' : '(max-width: 620px) 100vw, (max-width: 980px) 50vw, 33vw';
+---
+{
+  image ? (
+    <div class:list={['cover', 'cover-img', shapeClass]}>
+      <Image src={image} alt={imageAlt} widths={[480, 800, 1200, 1600]} sizes={sizes} loading={eager ? 'eager' : 'lazy'} fetchpriority={eager ? 'high' : undefined} />
+    </div>
+  ) : (
+    <div class:list={['cover', `cv-${style}`, shapeClass]} aria-hidden={decorative ? 'true' : undefined} role={decorative ? undefined : 'img'} aria-label={decorative ? undefined : title}>
+      {style === 'wwc' && (
+        <svg class="thread art" viewBox="0 0 400 500" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M-10 470 C 90 440, 120 360, 210 360 S 330 300, 300 220 S 180 130, 260 70 S 380 30, 420 40" fill="none" stroke="var(--wwc-apricot)" stroke-width="1.4" vector-effect="non-scaling-stroke" />
+          <path d="M-10 485 C 110 470, 160 420, 240 410" fill="none" stroke="var(--wwc-sand)" stroke-width="0.8" opacity=".5" vector-effect="non-scaling-stroke" />
+        </svg>
+      )}
+      {style === 'angle' && (<><span class="frame" /><span class="frame2" /></>)}
+      {style === 'life' && <span class="line" />}
+      {style === 'mattah' && <span class="disc" />}
+      <span class="c-num">{kicker}</span>
+      {style === 'wwc' ? (
+        <span class="c-title">{title}{altTitle && <em lang={lang === 'ar' ? 'en' : 'ar'}>{altTitle}</em>}</span>
+      ) : (
+        <span class="c-title">{title}</span>
+      )}
+      {style === 'angle' && altTitle && <span class="label" style="color:var(--burgundy)">{altTitle}</span>}
+      {!(style === 'angle' && altTitle) && <span />}
+    </div>
+  )
+}

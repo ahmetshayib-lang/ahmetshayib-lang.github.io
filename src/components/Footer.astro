@@ -1,0 +1,39 @@
+---
+import { t, localizePath, num } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+import { site } from '@/config/site';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const year = new Date().getFullYear();
+const social = site.social.filter((s) => s.url);
+---
+<footer class="footer">
+  <div class="wrap">
+    <p class="big">{t(lang, 'footer.line')}</p>
+    <a class="btn btn-light" href={localizePath(lang, '/contact/')} style="margin-top:var(--s4)">
+      {t(lang, 'cta.contact')} <span class="arrow" aria-hidden="true">→</span>
+    </a>
+    <div class="footer-row">
+      <span>© {num(lang, year)} {t(lang, 'site.name')}</span>
+      <ul>
+        <li><a href={localizePath(lang, '/projects/')}>{t(lang, 'nav.projects')}</a></li>
+        <li><a href={localizePath(lang, '/publications/')}>{t(lang, 'nav.publications')}</a></li>
+        <li><a href={localizePath(lang, '/ideas/')}>{t(lang, 'nav.ideas')}</a></li>
+        <li><a href={localizePath(lang, '/about/')}>{t(lang, 'nav.about')}</a></li>
+        <li><a href={localizePath(lang, '/contact/')}>{t(lang, 'nav.contact')}</a></li>
+      </ul>
+      {
+        social.length > 0 && (
+          <ul>
+            {social.map((s) => (
+              <li><a href={s.url} rel="me noopener" target="_blank">{s.label}</a></li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </div>
+</footer>

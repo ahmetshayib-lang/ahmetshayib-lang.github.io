@@ -1,0 +1,80 @@
+---
+import '@/styles/global.css';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import { t, dir, localizePath, otherLang } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  /** Page title; the site name is appended automatically. Omit on the home page. */
+  title?: string;
+  description?: string;
+  /** Language-neutral path of this page, e.g. "/projects/what-we-carry/". */
+  path: string;
+  /** Neutral path of the equivalent page in the other language, when it differs or is missing. */
+  altPath?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article' | 'book';
+  noindex?: boolean;
+}
+
+const { lang, title, description, path, altPath = path, ogImage, ogType = 'website', noindex = false } = Astro.props;
+const other = otherLang(lang);
+const siteName = t(lang, 'site.name');
+const fullTitle = title ? `${title} — ${siteName}` : `${siteName} — ${t(lang, 'site.tagline')}`;
+const desc = description ?? t(lang, 'site.description');
+const site = Astro.site ?? new URL('https://ahmad-shuaib.pages.dev');
+const canonical = new URL(localizePath(lang, path), site).href;
+const hrefAr = new URL(localizePath('ar', lang === 'ar' ? path : altPath), site).href;
+const hrefEn = new URL(localizePath('en', lang === 'en' ? path : altPath), site).href;
+const og = new URL(ogImage ?? '/og-default.png', site).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: siteName,
+  alternateName: t(lang, 'site.nameAlt'),
+  url: new URL(localizePath(lang, '/'), site).href,
+  inLanguage: lang,
+  author: { '@type': 'Person', name: lang === 'ar' ? 'أحمد شعيب' : 'Ahmad Shuaib' },
+};
+---
+<!doctype html>
+<html lang={lang} dir={dir(lang)}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={desc} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="ar" href={hrefAr} />
+    <link rel="alternate" hreflang="en" href={hrefEn} />
+    <link rel="alternate" hreflang="x-default" href={hrefAr} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#4A2635" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={title ?? fullTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={og} />
+    <meta property="og:locale" content={lang === 'ar' ? 'ar_AR' : 'en_US'} />
+    <meta property="og:locale:alternate" content={other === 'ar' ? 'ar_AR' : 'en_US'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title ?? fullTitle} />
+    <meta name="twitter:description" content={desc} />
+    <meta name="twitter:image" content={og} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body>
+    <a class="skip" href="#main">{t(lang, 'nav.skip')}</a>
+    <Header lang={lang} path={path} altPath={altPath} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

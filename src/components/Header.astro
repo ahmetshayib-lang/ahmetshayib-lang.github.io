@@ -1,0 +1,70 @@
+---
+import { t, localizePath, otherLang } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  path: string;
+  altPath: string;
+}
+const { lang, path, altPath } = Astro.props;
+const other = otherLang(lang);
+
+const items = [
+  { key: 'nav.home', href: '/' },
+  { key: 'nav.about', href: '/about/' },
+  { key: 'nav.projects', href: '/projects/' },
+  { key: 'nav.publications', href: '/publications/' },
+  { key: 'nav.ideas', href: '/ideas/' },
+  { key: 'nav.contact', href: '/contact/' },
+] as const;
+
+const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+<header class="masthead" data-masthead>
+  <div class="wrap masthead-inner">
+    <a class="wordmark" href={localizePath(lang, '/')} aria-label={`${t(lang, 'site.name')} — ${t(lang, 'nav.home')}`}>
+      {lang === 'ar' ? <span class="wordmark-ar">أحمد شعيب</span> : <span class="wordmark-en">AHMAD SHUAIB</span>}
+      <span class="wordmark-sub">{t(lang, 'site.tagline')}</span>
+    </a>
+    <nav class="nav" aria-label={t(lang, 'nav.main')}>
+      <ul class="nav-list" id="nav-list">
+        {
+          items.map((i) => (
+            <li>
+              <a href={localizePath(lang, i.href)} aria-current={isCurrent(i.href) ? 'page' : undefined}>
+                {t(lang, i.key)}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a class="lang-switch" href={localizePath(other, altPath)} hreflang={other} lang={other}>
+        {t(lang, 'lang.switchTo')}
+      </a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-list" data-menu
+        data-open-label={t(lang, 'nav.menu')} data-close-label={t(lang, 'nav.close')}>
+        {t(lang, 'nav.menu')}
+      </button>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-masthead]');
+  const btn = document.querySelector<HTMLButtonElement>('[data-menu]');
+  if (header && btn) {
+    const set = (open: boolean) => {
+      header.toggleAttribute('data-open', open);
+      btn.setAttribute('aria-expanded', String(open));
+      btn.textContent = (open ? btn.dataset.closeLabel : btn.dataset.openLabel) ?? '';
+    };
+    btn.addEventListener('click', () => set(!header.hasAttribute('data-open')));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && header.hasAttribute('data-open')) {
+        set(false);
+        btn.focus();
+      }
+    });
+  }
+</script>
