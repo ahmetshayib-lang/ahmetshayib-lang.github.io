@@ -1,22 +1,27 @@
 ---
-import Cover from './Cover.astro';
+import BookCover from './BookCover.astro';
 import StatusTag from './StatusTag.astro';
 import { localizePath } from '@/i18n/utils';
-import { publicationTypes, type Lang } from '@/i18n/ui';
+import { publicationTypeSingular, type Lang } from '@/i18n/ui';
 import type { Localized } from '@/lib/content';
 
 interface Props {
   lang: Lang;
   pub: Localized<'publications'>;
+  /** Title of the parent project/initiative, shown as "From …". */
+  parentTitle?: string;
+  eager?: boolean;
 }
-const { lang, pub } = Astro.props;
+const { lang, pub, parentTitle, eager = false } = Astro.props;
 const d = pub.data;
 ---
 <a class="pub" href={localizePath(lang, `/publications/${pub.slug}/`)}>
-  <Cover lang={lang} title={d.title} altTitle={d.altTitle} kicker={publicationTypes[d.type][lang]} style={d.coverStyle} image={d.cover} imageAlt={d.coverAlt} shape="book" />
+  <BookCover lang={lang} title={d.title} image={d.cover} alt={d.coverAlt} eager={eager} />
   <div>
+    <p class="label">{publicationTypeSingular[d.type][lang]}{d.audience && ` · ${d.audience}`}</p>
     <h3>{d.title}</h3>
-    {d.subtitle && <p class="sub">{d.subtitle}</p>}
+    {d.altTitle && <p class="alt" lang={lang === 'ar' ? 'en' : 'ar'}>{d.altTitle}</p>}
+    {parentTitle && <p class="from">{lang === 'ar' ? `من «${parentTitle}»` : `From ${parentTitle}`}</p>}
     <div class="card-meta"><StatusTag lang={lang} status={d.status} /></div>
   </div>
 </a>

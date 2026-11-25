@@ -40,19 +40,19 @@ const social = site.social.filter((s) => s.url);
     <section class="case">
       {
         slug === 'contact' ? (
-          <dl class="facts">
-            <div>
-              <dt>{lang === 'ar' ? 'البريد الإلكتروني' : 'Email'}</dt>
-              <dd>{site.email ? <a class="link" href={`mailto:${site.email}`}>{site.email}</a> : <span class="placeholder">{t(lang, 'placeholder')}</span>}</dd>
-            </div>
-            <div>
-              <dt>{lang === 'ar' ? 'المنصّات' : 'Elsewhere'}</dt>
-              <dd>
-                {social.length > 0
-                  ? social.map((s) => <a class="link" href={s.url} rel="me noopener" target="_blank" style="display:block">{s.label}</a>)
-                  : <span class="placeholder">{t(lang, 'placeholder')}</span>}
-              </dd>
-            </div>
+          <dl class="facts contact-list">
+            {site.email && (
+              <div>
+                <dt>{t(lang, 'contact.email')}</dt>
+                <dd><a class="link" href={`mailto:${site.email}`} dir="ltr">{site.email}</a></dd>
+              </div>
+            )}
+            {social.map((s) => (
+              <div>
+                <dt>{s.label === 'Instagram' ? t(lang, 'contact.instagram') : s.label}</dt>
+                <dd><a class="link" href={s.url} rel="me noopener" target="_blank" dir="ltr">{s.handle ?? s.url}</a></dd>
+              </div>
+            ))}
           </dl>
         ) : (
           <div aria-hidden="true" class="label" style="border-top:1px solid var(--charcoal);padding-top:var(--s2);align-self:start">{t(lang, 'site.tagline')}</div>

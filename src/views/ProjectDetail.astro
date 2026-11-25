@@ -81,8 +81,12 @@ const langs = d.languages.map((l) => languageNames[l][lang]);
     {
       related.length > 0 && (
         <section class="section" aria-labelledby="related-title">
-          <div class="section-head"><h2 id="related-title">{t(lang, 'detail.relatedPublications')}</h2></div>
-          <div class="pub-list">{related.map((pub) => <PublicationCard lang={lang} pub={pub} />)}</div>
+          <div class="section-head">
+            <h2 id="related-title">
+              {t(lang, d.category === 'initiative' ? 'detail.initiativePublications' : 'detail.projectPublications')}
+            </h2>
+          </div>
+          <div class="pub-list pub-list-lg">{related.map((pub) => <PublicationCard lang={lang} pub={pub} />)}</div>
         </section>
       )
     }

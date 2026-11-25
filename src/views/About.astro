@@ -1,0 +1,88 @@
+---
+/** About page — content in src/content/pages/about/<lang>.md */
+import { render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { getPage } from '@/lib/content';
+import { t, localizePath, num } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const page = await getPage(lang, 'about');
+if (!page) throw new Error(`Missing content: src/content/pages/about/${lang}.md`);
+const d = page.data;
+const { Content } = await render(page.entry);
+const academic = d.academic?.published && d.academic.entries.length > 0 ? d.academic : undefined;
+---
+<BaseLayout lang={lang} path="/about/" title={d.title} description={d.description ?? d.profile}>
+  <div class="wrap">
+    <header class="about-head">
+      <p class="label reveal">{d.title}</p>
+      <h1 class="reveal reveal-2">{lang === 'ar' ? 'أحمد شعيب' : 'Ahmad Shuaib'}</h1>
+      {d.profile && <p class="about-profile reveal reveal-3">{d.profile}</p>}
+    </header>
+
+    <section class="case">
+      <div class="label" aria-hidden="true" style="border-top:1px solid var(--charcoal);padding-top:var(--s2);align-self:start">
+        {t(lang, 'site.tagline')}
+      </div>
+      <article class="prose">
+        <Content />
+      </article>
+    </section>
+  </div>
+
+  {
+    d.vision && (
+      <section class="vision-band" aria-labelledby="vision-title">
+        <div class="wrap">
+          <h2 class="label" id="vision-title">{t(lang, 'home.vision')}</h2>
+          <blockquote class="vision-quote">{d.vision}</blockquote>
+          {d.visionNote && <p class="vision-note">{d.visionNote}</p>}
+        </div>
+      </section>
+    )
+  }
+
+  {
+    d.areas.length > 0 && (
+      <section class="wrap section" aria-labelledby="areas-title">
+        <div class="section-head"><h2 id="areas-title">{t(lang, 'home.fields')}</h2></div>
+        <ul class="areas">
+          {d.areas.map((a, i) => (
+            <li>
+              {a.href ? (
+                <a href={localizePath(lang, a.href)}>
+                  <span class="num">{num(lang, i + 1, 2)}</span>
+                  <span class="a-title">{a.title} <span class="arrow" aria-hidden="true">→</span></span>
+                  <span class="a-text">{a.text}</span>
+                </a>
+              ) : (
+                <div>
+                  <span class="num">{num(lang, i + 1, 2)}</span>
+                  <span class="a-title">{a.title}</span>
+                  <span class="a-text">{a.text}</span>
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    academic && (
+      <section class="wrap section" aria-labelledby="academic-title">
+        <div class="section-head"><h2 id="academic-title">{academic.heading ?? (lang === 'ar' ? 'الخلفية الأكاديمية' : 'Academic background')}</h2></div>
+        <dl class="facts">
+          {academic.entries.map((e) => (
+            <div><dt>{[e.institution, e.years].filter(Boolean).join(' · ')}</dt><dd>{e.title}</dd></div>
+          ))}
+        </dl>
+      </section>
+    )
+  }
+</BaseLayout>

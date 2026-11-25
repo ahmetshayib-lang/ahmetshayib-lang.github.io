@@ -2,7 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ProjectCard from '@/components/ProjectCard.astro';
 import { getProjects } from '@/lib/content';
-import { t } from '@/i18n/utils';
+import { t, localizePath } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
 
 interface Props {
@@ -20,9 +20,16 @@ const projects = await getProjects(lang);
     <div class="cards">
       {
         projects.map((p, i) => (
-          <ProjectCard lang={lang} project={p} index={i + 1} size={i < 2 ? 'half' : 'default'} eager={i < 2} />
+          <ProjectCard lang={lang} project={p} index={i + 1} size={i === 0 ? 'wide' : 'default'} eager={i < 2} />
         ))
       }
     </div>
+    <a class="next-link" style="margin-top:var(--s6)" href={localizePath(lang, '/publications/')}>
+      <span>
+        <span class="label" style="display:block">{t(lang, 'home.publications')}</span>
+        <span class="t">{t(lang, 'home.cta.publications')}</span>
+      </span>
+      <span class="arrow" aria-hidden="true">→</span>
+    </a>
   </div>
 </BaseLayout>

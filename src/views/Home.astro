@@ -1,24 +1,38 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import ProjectCard from '@/components/ProjectCard.astro';
+import Cover from '@/components/Cover.astro';
+import BookCover from '@/components/BookCover.astro';
 import PublicationCard from '@/components/PublicationCard.astro';
-import { getProjects, getPublications } from '@/lib/content';
+import { getProjects, getPublications, getPage, getProjectTitles } from '@/lib/content';
 import { t, localizePath, num } from '@/i18n/utils';
-import { projectCategories, type Lang } from '@/i18n/ui';
+import { projectCategories, publicationTypeSingular, type Lang } from '@/i18n/ui';
 
 interface Props {
   lang: Lang;
 }
 const { lang } = Astro.props;
 const projects = await getProjects(lang);
-const featured = projects.filter((p) => p.data.featured);
-const pubs = (await getPublications(lang)).slice(0, 4);
-const indexOf = (slug: string) => projects.findIndex((p) => p.slug === slug) + 1;
+const pubs = await getPublications(lang);
+const titles = await getProjectTitles(lang);
+const about = await getPage(lang, 'about');
 
-const fields =
-  lang === 'ar'
-    ? ['الكتابة والنشر', 'المبادرات الثقافية والاجتماعية', 'الإعلام الإبداعي والمحتوى', 'المشاريع الفكرية', 'العمل الأكاديمي والهندسي', 'المشاريع الإنسانية والمجتمعية']
-    : ['Writing & publishing', 'Cultural & social initiatives', 'Creative media & content', 'Intellectual projects', 'Academic & engineering work', 'Humanitarian & community projects'];
+/* Index: each project followed by its own publications, then independent books. */
+type Row = { href: string; title: string; alt?: string; cat: string; child: boolean };
+const rows: Row[] = [];
+for (const p of projects) {
+  rows.push({ href: `/projects/${p.slug}/`, title: p.data.title, alt: p.data.altTitle, cat: projectCategories[p.data.category][lang], child: false });
+  for (const b of pubs.filter((b) => b.data.project === p.slug)) {
+    rows.push({ href: `/publications/${b.slug}/`, title: b.data.title, alt: b.data.altTitle, cat: publicationTypeSingular[b.data.type][lang], child: true });
+  }
+}
+for (const b of pubs.filter((b) => !b.data.project || !titles.has(b.data.project))) {
+  rows.push({ href: `/publications/${b.slug}/`, title: b.data.title, alt: b.data.altTitle, cat: publicationTypeSingular[b.data.type][lang], child: false });
+}
+
+const wwc = projects.find((p) => p.slug === 'what-we-carry');
+const wwcBooks = wwc ? pubs.filter((b) => b.data.project === wwc.slug) : [];
+const others = projects.filter((p) => p.slug !== 'what-we-carry' && p.data.featured);
+const otherLang = lang === 'ar' ? 'en' : 'ar';
 ---
 <BaseLayout lang={lang} path="/">
   <div class="wrap">
@@ -28,8 +42,8 @@ const fields =
       </h1>
       <div class="hero-aside reveal reveal-2">
         <p>{t(lang, 'home.hero.lead')}</p>
-        <a class="btn btn-primary" href={localizePath(lang, '/projects/')}>
-          {t(lang, 'home.cta.projects')} <span class="arrow" aria-hidden="true">→</span>
+        <a class="btn btn-primary" href={localizePath(lang, '/about/')}>
+          {t(lang, 'home.cta.about')} <span class="arrow" aria-hidden="true">→</span>
         </a>
       </div>
     </section>
@@ -38,15 +52,15 @@ const fields =
       <h2 id="index-title" class="sr-only">{t(lang, 'home.index')}</h2>
       <ol class="toc">
         {
-          projects.map((p, i) => (
-            <li>
-              <a href={localizePath(lang, `/projects/${p.slug}/`)}>
+          rows.map((r, i) => (
+            <li class:list={[r.child && 'toc-child']}>
+              <a href={localizePath(lang, r.href)}>
                 <span class="num">{num(lang, i + 1)}</span>
                 <span class="t">
-                  {p.data.title}
-                  {p.data.altTitle && <small lang={lang === 'ar' ? 'en' : 'ar'}>{p.data.altTitle}</small>}
+                  {r.title}
+                  {r.alt && <small lang={otherLang}>{r.alt}</small>}
                 </span>
-                <span class="cat">{projectCategories[p.data.category][lang]}</span>
+                <span class="cat">{r.cat}</span>
                 <span class="arrow" aria-hidden="true">→</span>
               </a>
             </li>
@@ -54,41 +68,85 @@ const fields =
         }
       </ol>
     </section>
-
-    <section class="section" aria-labelledby="featured-title">
-      <div class="section-head">
-        <h2 id="featured-title">{t(lang, 'home.featured')}</h2>
-        <a class="link label" href={localizePath(lang, '/projects/')}>{t(lang, 'home.cta.projects')}</a>
-      </div>
-      <div class="cards">
-        {
-          featured.map((p, i) => (
-            <ProjectCard lang={lang} project={p} index={indexOf(p.slug)} size={i === 0 ? 'wide' : i === 1 ? 'default' : 'half'} eager={i === 0} />
-          ))
-        }
-      </div>
-    </section>
   </div>
 
-  <section class="band section" aria-labelledby="pubs-title">
-    <div class="wrap">
-      <div class="section-head">
-        <h2 id="pubs-title">{t(lang, 'home.publications')}</h2>
-        <a class="link label" href={localizePath(lang, '/publications/')}>{t(lang, 'home.cta.publications')}</a>
-      </div>
-      <div class="pub-list">
-        {pubs.map((pub) => <PublicationCard lang={lang} pub={pub} />)}
-      </div>
+  {
+    wwc && (
+      <section class="feature feature-wwc" aria-labelledby="wwc-title">
+        <div class="wrap feature-inner">
+          <div class="feature-text">
+            <p class="label">{projectCategories[wwc.data.category][lang]}</p>
+            <h2 id="wwc-title">{wwc.data.title}{wwc.data.altTitle && <small lang={otherLang}>{wwc.data.altTitle}</small>}</h2>
+            <p class="feature-lead">{wwc.data.summary}</p>
+            <a class="btn btn-light" href={localizePath(lang, `/projects/${wwc.slug}/`)}>
+              {t(lang, 'home.cta.initiative')} <span class="arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+          <div class="feature-books">
+            <p class="label">{t(lang, 'home.initiativePubs')}</p>
+            <div class="feature-shelf">
+              {wwcBooks.map((b) => (
+                <a href={localizePath(lang, `/publications/${b.slug}/`)} class="feature-book">
+                  <BookCover lang={lang} title={b.data.title} image={b.data.cover} alt={b.data.coverAlt} />
+                  <span class="fb-type">{publicationTypeSingular[b.data.type][lang]}{b.data.audience && ` · ${b.data.audience}`}</span>
+                  <span class="fb-title">{b.data.title}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section wrap" aria-labelledby="pubs-title">
+    <div class="section-head">
+      <h2 id="pubs-title">{t(lang, 'home.publications')}</h2>
+      <a class="link label" href={localizePath(lang, '/publications/')}>{t(lang, 'home.cta.publications')}</a>
+    </div>
+    <div class="pub-list">
+      {pubs.map((pub) => <PublicationCard lang={lang} pub={pub} parentTitle={pub.data.project ? titles.get(pub.data.project) : undefined} />)}
     </div>
   </section>
 
-  <section class="wrap section" aria-labelledby="fields-title">
-    <div class="section-head">
-      <h2 id="fields-title">{t(lang, 'home.fields')}</h2>
-      <a class="link label" href={localizePath(lang, '/about/')}>{t(lang, 'home.cta.about')}</a>
-    </div>
-    <ul class="fields">
-      {fields.map((f, i) => <li><span class="num">{num(lang, i + 1, 2)}</span>{f}</li>)}
-    </ul>
-  </section>
+  {
+    others.map((p) => {
+      const books = pubs.filter((b) => b.data.project === p.slug);
+      return (
+        <section class="feature feature-light" aria-labelledby={`f-${p.slug}`}>
+          <div class="wrap feature-inner">
+            <a class="feature-visual" href={localizePath(lang, `/projects/${p.slug}/`)} tabindex="-1" aria-hidden="true">
+              <Cover lang={lang} title={p.data.title} kicker={projectCategories[p.data.category][lang]} style={p.data.coverStyle} image={p.data.cover} imageAlt={p.data.coverAlt} shape="wide" />
+            </a>
+            <div class="feature-text">
+              <p class="label">{projectCategories[p.data.category][lang]}</p>
+              <h2 id={`f-${p.slug}`}>{p.data.title}{p.data.altTitle && <small lang={otherLang}>{p.data.altTitle}</small>}</h2>
+              <p class="feature-lead">{p.data.summary}</p>
+              {books.length > 0 && (
+                <p class="feature-rel">
+                  {t(lang, 'detail.projectPublications')}:{' '}
+                  {books.map((b, i) => (
+                    <>{i > 0 && (lang === 'ar' ? '، ' : ', ')}<a class="link" href={localizePath(lang, `/publications/${b.slug}/`)}>{b.data.title}</a></>
+                  ))}
+                </p>
+              )}
+              <a class="btn btn-secondary" href={localizePath(lang, `/projects/${p.slug}/`)}>
+                {t(lang, 'cta.view')} <span class="arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+        </section>
+      );
+    })
+  }
+
+  {
+    about?.data.vision && (
+      <section class="section wrap vision" aria-labelledby="vision-title">
+        <p class="label" id="vision-title">{t(lang, 'home.vision')}</p>
+        <blockquote class="vision-quote">{about.data.vision}</blockquote>
+        <a class="link label" href={localizePath(lang, '/about/')}>{t(lang, 'home.cta.about')}</a>
+      </section>
+    )
+  }
 </BaseLayout>

@@ -2,11 +2,12 @@
 import { render } from 'astro:content';
 import { Image } from 'astro:assets';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import Cover from '@/components/Cover.astro';
+import BookCover from '@/components/BookCover.astro';
 import StatusTag from '@/components/StatusTag.astro';
-import { getProjects, type Localized } from '@/lib/content';
+import PublicationCard from '@/components/PublicationCard.astro';
+import { getProjects, getPublications, type Localized } from '@/lib/content';
 import { t, localizePath, num, list } from '@/i18n/utils';
-import { publicationTypes, languageNames, type Lang } from '@/i18n/ui';
+import { publicationTypeSingular, projectCategories, languageNames, type Lang } from '@/i18n/ui';
 
 interface Props {
   lang: Lang;
@@ -16,7 +17,9 @@ const { lang, pub } = Astro.props;
 const d = pub.data;
 const { Content } = await render(pub.entry);
 const project = d.project ? (await getProjects(lang)).find((p) => p.slug === d.project) : undefined;
+const siblings = project ? (await getPublications(lang)).filter((p) => p.data.project === project.slug && p.slug !== pub.slug) : [];
 const langs = d.languages.map((l) => languageNames[l][lang]);
+const typeLabel = publicationTypeSingular[d.type][lang];
 ---
 <BaseLayout lang={lang} path={`/publications/${pub.slug}/`} title={d.title} description={d.description ?? d.summary}
   ogImage={d.cover?.src} ogType="book">
@@ -24,21 +27,32 @@ const langs = d.languages.map((l) => languageNames[l][lang]);
     <section class="detail-hero">
       <div class="reveal">
         <nav class="crumbs" aria-label="breadcrumb">
-          <a href={localizePath(lang, '/publications/')}>{t(lang, 'nav.publications')}</a><span aria-hidden="true">/</span><span>{publicationTypes[d.type][lang]}</span>
+          <a href={localizePath(lang, '/publications/')}>{t(lang, 'nav.publications')}</a><span aria-hidden="true">/</span><span>{typeLabel}</span>
         </nav>
+        {
+          project && (
+            <p class="parent-line">
+              <span class="label">{projectCategories[project.data.category][lang]}</span>
+              <a href={localizePath(lang, `/projects/${project.slug}/`)}>
+                {lang === 'ar' ? `من «${project.data.title}»` : `From ${project.data.title}`} <span class="arrow" aria-hidden="true">→</span>
+              </a>
+            </p>
+          )
+        }
         <h1>{d.title}</h1>
         {d.altTitle && <p class="alt" lang={lang === 'ar' ? 'en' : 'ar'}>{d.altTitle}</p>}
-        {d.subtitle && <p class="lead">{d.subtitle}</p>}
+        {d.subtitle ? <p class="lead">{d.subtitle}</p> : <p class="lead">{d.summary}</p>}
       </div>
-      <div class="reveal reveal-2" style="max-width:24rem;width:100%;justify-self:center">
-        <Cover lang={lang} title={d.title} altTitle={d.altTitle} kicker={publicationTypes[d.type][lang]} style={d.coverStyle} image={d.cover} imageAlt={d.coverAlt} shape="book" eager decorative={false} />
+      <div class="reveal reveal-2 detail-book">
+        <BookCover lang={lang} title={d.title} image={d.cover} alt={d.coverAlt} size="hero" eager decorative={false} />
       </div>
     </section>
 
     <section class="case">
       <dl class="facts">
-        <div><dt>{t(lang, 'detail.type')}</dt><dd>{publicationTypes[d.type][lang]}</dd></div>
+        <div><dt>{t(lang, 'detail.type')}</dt><dd>{typeLabel}</dd></div>
         <div><dt>{t(lang, 'detail.status')}</dt><dd><StatusTag lang={lang} status={d.status} /></dd></div>
+        {d.audience && <div><dt>{t(lang, 'detail.audience')}</dt><dd>{d.audience}</dd></div>}
         {project && <div><dt>{t(lang, 'detail.project')}</dt><dd><a href={localizePath(lang, `/projects/${project.slug}/`)}>{project.data.title}</a></dd></div>}
         {langs.length > 0 && <div><dt>{t(lang, 'detail.languages')}</dt><dd>{list(lang, langs)}</dd></div>}
         {d.year && <div><dt>{t(lang, 'detail.year')}</dt><dd>{d.year}</dd></div>}
@@ -71,6 +85,17 @@ const langs = d.languages.map((l) => languageNames[l][lang]);
               </figure>
             ))}
           </div>
+        </section>
+      )
+    }
+
+    {
+      project && siblings.length > 0 && (
+        <section class="section" aria-labelledby="sib-title">
+          <div class="section-head">
+            <h2 id="sib-title">{lang === 'ar' ? `أيضًا من «${project.data.title}»` : `Also from ${project.data.title}`}</h2>
+          </div>
+          <div class="pub-list">{siblings.map((s) => <PublicationCard lang={lang} pub={s} />)}</div>
         </section>
       )
     }
