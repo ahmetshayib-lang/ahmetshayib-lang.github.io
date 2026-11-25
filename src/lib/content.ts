@@ -35,6 +35,11 @@ export async function getPublications(lang: Lang) {
   return (await localized('publications', lang)).sort(byOrder);
 }
 
+/** slug → title of every project, for "From …" lines on publications. */
+export async function getProjectTitles(lang: Lang): Promise<Map<string, string>> {
+  return new Map((await getProjects(lang)).map((p) => [p.slug, p.data.title]));
+}
+
 export async function getPage(lang: Lang, slug: string) {
   return (await localized('pages', lang)).find((p) => p.slug === slug);
 }

@@ -12,7 +12,7 @@ export const ui = {
     'site.nameAlt': 'AHMAD SHUAIB',
     'site.tagline': 'أفكار · مشاريع · أثر',
     'site.description':
-      'منصّة شخصية لأحمد شعيب تجمع الكتابة والنشر، والمبادرات الثقافية والإنسانية، والمشاريع الفكرية، والعمل الهندسي والأكاديمي.',
+      'أحمد شعيب: مهندس مدني، وصانع محتوى، ومؤسس لمشاريع إبداعية ومبادرات ثقافية واجتماعية. تطوير الأفكار وتحويلها إلى مشاريع تصنع قيمة وتترك أثرًا.',
 
     'nav.home': 'الرئيسية',
     'nav.about': 'عنّي',
@@ -31,20 +31,25 @@ export const ui = {
     'home.hero.2': 'مشاريع.',
     'home.hero.3': 'أثر.',
     'home.hero.lead':
-      'منصّة شخصية تجمع الكتابة والمبادرات الثقافية والمشاريع الفكرية والعمل الهندسي في مكان واحد.',
-    'home.index': 'فهرس المشاريع',
+      'مهندس مدني، وصانع محتوى، ومؤسس لمشاريع إبداعية ومبادرات ثقافية واجتماعية.',
+    'home.index': 'الفهرس',
     'home.featured': 'مشاريع مختارة',
-    'home.publications': 'من الإصدارات',
+    'home.publications': 'الإصدارات',
     'home.fields': 'مجالات العمل',
+    'home.initiative': 'مبادرة',
+    'home.initiativePubs': 'إصدارات المبادرة',
+    'home.vision': 'الرؤية',
+    'home.cta.initiative': 'تعرّف إلى المبادرة',
+    'home.cta.book': 'عن الكتاب',
     'home.cta.projects': 'كل المشاريع',
     'home.cta.publications': 'كل الإصدارات',
     'home.cta.about': 'تعرّف إليّ',
 
     'projects.title': 'المشاريع',
-    'projects.lead': 'مبادرات وكتب وهويات محتوى وأعمال هندسية — كل مشروع بقصته وسياقه.',
+    'projects.lead': 'مبادرات ثقافية واجتماعية وهويات محتوى، ولكلّ منها إصداراته وسياقه.',
     'projects.all': 'الكل',
     'publications.title': 'الإصدارات',
-    'publications.lead': 'كتب وكتيّبات وإصدارات رقمية — المنشور منها وما هو قيد الإعداد.',
+    'publications.lead': 'أربعة كتب مكتملة: كتابان فكريّان، وكتاب للكبار، وقصة للأطفال — لكلٍّ منها هويته، وبعضها جزء من مبادرة أو مشروع أكبر.',
     'publications.empty': 'لا توجد إصدارات في هذا القسم بعد.',
     'ideas.title': 'أفكار ومبادرات',
     'ideas.lead': 'المبادرات الثقافية والاجتماعية، والأسئلة التي تقف خلف المشاريع.',
@@ -62,6 +67,13 @@ export const ui = {
     'detail.pages': 'عدد الصفحات',
     'detail.gallery': 'معرض الصور',
     'detail.relatedPublications': 'إصدارات مرتبطة',
+    'detail.initiativePublications': 'إصدارات المبادرة',
+    'detail.projectPublications': 'إصدارات المشروع',
+    'detail.audience': 'الجمهور',
+    'detail.from': 'من',
+    'cover.pending': 'الغلاف الرسمي يُضاف قريبًا',
+    'contact.email': 'البريد الإلكتروني',
+    'contact.instagram': 'إنستغرام',
     'detail.relatedProject': 'المشروع',
     'detail.next': 'المشروع التالي',
     'detail.back.projects': 'كل المشاريع',
@@ -84,7 +96,7 @@ export const ui = {
     'site.nameAlt': 'أحمد شعيب',
     'site.tagline': 'Ideas · Projects · Impact',
     'site.description':
-      'The personal platform of Ahmad Shuaib — writing and publishing, cultural and humanitarian initiatives, intellectual projects, and engineering and academic work.',
+      'Ahmad Shuaib — Civil Engineer, Content Creator, and Founder of Creative Projects and Cultural and Social Initiatives. Developing ideas and transforming them into projects that create value and make an impact.',
 
     'nav.home': 'Home',
     'nav.about': 'About',
@@ -103,20 +115,25 @@ export const ui = {
     'home.hero.2': 'Projects.',
     'home.hero.3': 'Impact.',
     'home.hero.lead':
-      'A personal platform bringing together writing, cultural initiatives, intellectual projects and engineering work in one place.',
-    'home.index': 'Project index',
+      'Civil Engineer, Content Creator, and Founder of Creative Projects and Cultural and Social Initiatives.',
+    'home.index': 'Index',
     'home.featured': 'Selected projects',
-    'home.publications': 'From the publications',
+    'home.publications': 'Publications',
     'home.fields': 'Fields of work',
+    'home.initiative': 'Initiative',
+    'home.initiativePubs': 'Publications of the initiative',
+    'home.vision': 'Vision',
+    'home.cta.initiative': 'Discover the initiative',
+    'home.cta.book': 'About the book',
     'home.cta.projects': 'All projects',
     'home.cta.publications': 'All publications',
     'home.cta.about': 'About me',
 
     'projects.title': 'Projects',
-    'projects.lead': 'Initiatives, books, content identities and engineering work — each with its own story and context.',
+    'projects.lead': 'Cultural and social initiatives and content identities — each with its own context and publications.',
     'projects.all': 'All',
     'publications.title': 'Publications',
-    'publications.lead': 'Books, booklets and digital editions — published and in preparation.',
+    'publications.lead': 'Four completed books — two reflective works, a book for adults and a story for children. Each has its own identity; some belong to a larger initiative or project.',
     'publications.empty': 'Nothing in this section yet.',
     'ideas.title': 'Ideas & Initiatives',
     'ideas.lead': 'Cultural and social initiatives, and the questions behind the projects.',
@@ -134,6 +151,13 @@ export const ui = {
     'detail.pages': 'Pages',
     'detail.gallery': 'Gallery',
     'detail.relatedPublications': 'Related publications',
+    'detail.initiativePublications': 'Publications of the initiative',
+    'detail.projectPublications': 'Publications of the project',
+    'detail.audience': 'Audience',
+    'detail.from': 'From',
+    'cover.pending': 'Official cover coming soon',
+    'contact.email': 'Email',
+    'contact.instagram': 'Instagram',
     'detail.relatedProject': 'Project',
     'detail.next': 'Next project',
     'detail.back.projects': 'All projects',
@@ -167,6 +191,7 @@ export const projectCategories = {
 
 export const statuses = {
   published: { ar: 'منشور', en: 'Published' },
+  complete: { ar: 'مكتمل', en: 'Complete' },
   ongoing: { ar: 'مستمر', en: 'Ongoing' },
   'in-preparation': { ar: 'قيد الإعداد', en: 'In preparation' },
   'in-development': { ar: 'قيد التطوير', en: 'In development' },
@@ -176,11 +201,18 @@ export const statuses = {
 
 /** Publication types, in the order they appear on the Publications page. */
 export const publicationTypes = {
-  published: { ar: 'أعمال منشورة', en: 'Published works' },
-  digital: { ar: 'إصدارات رقمية', en: 'Digital publications' },
-  'in-development': { ar: 'كتب قيد الإعداد', en: 'Books in development' },
+  book: { ar: 'كتب', en: 'Books' },
+  'digital-book': { ar: 'كتب رقمية', en: 'Digital books' },
   children: { ar: 'أدب الأطفال', en: 'Children’s literature' },
   booklet: { ar: 'كتيّبات وأعمال تحريرية', en: 'Booklets & editorial projects' },
+} as const;
+
+/** Singular form, used on cards and detail pages. */
+export const publicationTypeSingular = {
+  book: { ar: 'كتاب', en: 'Book' },
+  'digital-book': { ar: 'كتاب رقمي', en: 'Digital book' },
+  children: { ar: 'قصة للأطفال', en: 'Children’s story' },
+  booklet: { ar: 'كتيّب', en: 'Booklet' },
 } as const;
 
 export const languageNames = {

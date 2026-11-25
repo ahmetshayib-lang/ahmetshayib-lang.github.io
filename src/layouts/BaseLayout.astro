@@ -4,6 +4,7 @@ import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import { t, dir, localizePath, otherLang } from '@/i18n/utils';
 import type { Lang } from '@/i18n/ui';
+import { site as siteConfig } from '@/config/site';
 
 interface Props {
   lang: Lang;
@@ -36,7 +37,12 @@ const jsonLd = {
   alternateName: t(lang, 'site.nameAlt'),
   url: new URL(localizePath(lang, '/'), site).href,
   inLanguage: lang,
-  author: { '@type': 'Person', name: lang === 'ar' ? 'أحمد شعيب' : 'Ahmad Shuaib' },
+  author: {
+    '@type': 'Person',
+    name: lang === 'ar' ? 'أحمد شعيب' : 'Ahmad Shuaib',
+    jobTitle: t(lang, 'home.hero.lead'),
+    sameAs: siteConfig.social.map((s) => s.url),
+  },
 };
 ---
 <!doctype html>
