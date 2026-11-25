@@ -1,0 +1,66 @@
+---
+/** About / Ideas / Contact: editorial page from src/content/pages/<slug>/<lang>.md */
+import { render } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import { getPage, getProjects } from '@/lib/content';
+import { t } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+import { site } from '@/config/site';
+
+interface Props {
+  lang: Lang;
+  slug: 'about' | 'ideas' | 'contact';
+}
+const { lang, slug } = Astro.props;
+const page = await getPage(lang, slug);
+if (!page) throw new Error(`Missing content: src/content/pages/${slug}/${lang}.md`);
+const { Content } = await render(page.entry);
+
+const projects = await getProjects(lang);
+const initiatives = slug === 'ideas' ? projects.filter((p) => p.data.initiative) : [];
+const indexOf = (s: string) => projects.findIndex((p) => p.slug === s) + 1;
+const social = site.social.filter((s) => s.url);
+---
+<BaseLayout lang={lang} path={`/${slug}/`} title={page.data.title} description={page.data.description ?? page.data.lead}>
+  <div class="wrap">
+    <header class="page-head">
+      <h1 class="page-title reveal">{page.data.title}</h1>
+      {page.data.lead && <p class="lead reveal reveal-2">{page.data.lead}</p>}
+    </header>
+
+    {
+      slug === 'ideas' && initiatives.length > 0 && (
+        <section class="cards" style="margin-bottom:var(--s6)">
+          {initiatives.map((p) => <ProjectCard lang={lang} project={p} index={indexOf(p.slug)} size="half" />)}
+        </section>
+      )
+    }
+
+    <section class="case">
+      {
+        slug === 'contact' ? (
+          <dl class="facts">
+            <div>
+              <dt>{lang === 'ar' ? 'البريد الإلكتروني' : 'Email'}</dt>
+              <dd>{site.email ? <a class="link" href={`mailto:${site.email}`}>{site.email}</a> : <span class="placeholder">{t(lang, 'placeholder')}</span>}</dd>
+            </div>
+            <div>
+              <dt>{lang === 'ar' ? 'المنصّات' : 'Elsewhere'}</dt>
+              <dd>
+                {social.length > 0
+                  ? social.map((s) => <a class="link" href={s.url} rel="me noopener" target="_blank" style="display:block">{s.label}</a>)
+                  : <span class="placeholder">{t(lang, 'placeholder')}</span>}
+              </dd>
+            </div>
+          </dl>
+        ) : (
+          <div aria-hidden="true" class="label" style="border-top:1px solid var(--charcoal);padding-top:var(--s2);align-self:start">{t(lang, 'site.tagline')}</div>
+        )
+      }
+      <article class="prose">
+        <Content />
+      </article>
+    </section>
+  </div>
+</BaseLayout>

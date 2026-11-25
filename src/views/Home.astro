@@ -1,0 +1,94 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import PublicationCard from '@/components/PublicationCard.astro';
+import { getProjects, getPublications } from '@/lib/content';
+import { t, localizePath, num } from '@/i18n/utils';
+import { projectCategories, type Lang } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const projects = await getProjects(lang);
+const featured = projects.filter((p) => p.data.featured);
+const pubs = (await getPublications(lang)).slice(0, 4);
+const indexOf = (slug: string) => projects.findIndex((p) => p.slug === slug) + 1;
+
+const fields =
+  lang === 'ar'
+    ? ['الكتابة والنشر', 'المبادرات الثقافية والاجتماعية', 'الإعلام الإبداعي والمحتوى', 'المشاريع الفكرية', 'العمل الأكاديمي والهندسي', 'المشاريع الإنسانية والمجتمعية']
+    : ['Writing & publishing', 'Cultural & social initiatives', 'Creative media & content', 'Intellectual projects', 'Academic & engineering work', 'Humanitarian & community projects'];
+---
+<BaseLayout lang={lang} path="/">
+  <div class="wrap">
+    <section class="hero" aria-labelledby="hero-title">
+      <h1 id="hero-title" class="reveal">
+        <span>{t(lang, 'home.hero.1')}</span><span>{t(lang, 'home.hero.2')}</span><span>{t(lang, 'home.hero.3')}</span>
+      </h1>
+      <div class="hero-aside reveal reveal-2">
+        <p>{t(lang, 'home.hero.lead')}</p>
+        <a class="btn btn-primary" href={localizePath(lang, '/projects/')}>
+          {t(lang, 'home.cta.projects')} <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+
+    <section aria-labelledby="index-title" class="reveal reveal-3">
+      <h2 id="index-title" class="sr-only">{t(lang, 'home.index')}</h2>
+      <ol class="toc">
+        {
+          projects.map((p, i) => (
+            <li>
+              <a href={localizePath(lang, `/projects/${p.slug}/`)}>
+                <span class="num">{num(lang, i + 1)}</span>
+                <span class="t">
+                  {p.data.title}
+                  {p.data.altTitle && <small lang={lang === 'ar' ? 'en' : 'ar'}>{p.data.altTitle}</small>}
+                </span>
+                <span class="cat">{projectCategories[p.data.category][lang]}</span>
+                <span class="arrow" aria-hidden="true">→</span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="section" aria-labelledby="featured-title">
+      <div class="section-head">
+        <h2 id="featured-title">{t(lang, 'home.featured')}</h2>
+        <a class="link label" href={localizePath(lang, '/projects/')}>{t(lang, 'home.cta.projects')}</a>
+      </div>
+      <div class="cards">
+        {
+          featured.map((p, i) => (
+            <ProjectCard lang={lang} project={p} index={indexOf(p.slug)} size={i === 0 ? 'wide' : i === 1 ? 'default' : 'half'} eager={i === 0} />
+          ))
+        }
+      </div>
+    </section>
+  </div>
+
+  <section class="band section" aria-labelledby="pubs-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="pubs-title">{t(lang, 'home.publications')}</h2>
+        <a class="link label" href={localizePath(lang, '/publications/')}>{t(lang, 'home.cta.publications')}</a>
+      </div>
+      <div class="pub-list">
+        {pubs.map((pub) => <PublicationCard lang={lang} pub={pub} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section" aria-labelledby="fields-title">
+    <div class="section-head">
+      <h2 id="fields-title">{t(lang, 'home.fields')}</h2>
+      <a class="link label" href={localizePath(lang, '/about/')}>{t(lang, 'home.cta.about')}</a>
+    </div>
+    <ul class="fields">
+      {fields.map((f, i) => <li><span class="num">{num(lang, i + 1, 2)}</span>{f}</li>)}
+    </ul>
+  </section>
+</BaseLayout>

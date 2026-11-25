@@ -1,0 +1,39 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import PublicationCard from '@/components/PublicationCard.astro';
+import { getPublications } from '@/lib/content';
+import { t } from '@/i18n/utils';
+import { publicationTypes, type Lang } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const pubs = await getPublications(lang);
+const groups = (Object.keys(publicationTypes) as (keyof typeof publicationTypes)[]).map((type) => ({
+  type,
+  items: pubs.filter((p) => p.data.type === type),
+}));
+---
+<BaseLayout lang={lang} path="/publications/" title={t(lang, 'publications.title')} description={t(lang, 'publications.lead')}>
+  <div class="wrap">
+    <header class="page-head">
+      <h1 class="page-title reveal">{t(lang, 'publications.title')}</h1>
+      <p class="lead reveal reveal-2">{t(lang, 'publications.lead')}</p>
+    </header>
+    {
+      groups.map((g) => (
+        <section class="pub-group" aria-labelledby={`g-${g.type}`}>
+          <div class="section-head">
+            <h2 id={`g-${g.type}`}>{publicationTypes[g.type][lang]}</h2>
+          </div>
+          {g.items.length > 0 ? (
+            <div class="pub-list">{g.items.map((pub) => <PublicationCard lang={lang} pub={pub} />)}</div>
+          ) : (
+            <p class="label" style="color:var(--muted)">{t(lang, 'publications.empty')}</p>
+          )}
+        </section>
+      ))
+    }
+  </div>
+</BaseLayout>

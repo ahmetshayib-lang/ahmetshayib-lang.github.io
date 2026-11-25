@@ -1,0 +1,28 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+import { getProjects } from '@/lib/content';
+import { t } from '@/i18n/utils';
+import type { Lang } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const projects = await getProjects(lang);
+---
+<BaseLayout lang={lang} path="/projects/" title={t(lang, 'projects.title')} description={t(lang, 'projects.lead')}>
+  <div class="wrap">
+    <header class="page-head">
+      <h1 class="page-title reveal">{t(lang, 'projects.title')}</h1>
+      <p class="lead reveal reveal-2">{t(lang, 'projects.lead')}</p>
+    </header>
+    <div class="cards">
+      {
+        projects.map((p, i) => (
+          <ProjectCard lang={lang} project={p} index={i + 1} size={i < 2 ? 'half' : 'default'} eager={i < 2} />
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>

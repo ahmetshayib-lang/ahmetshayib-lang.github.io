@@ -1,0 +1,102 @@
+---
+import { render } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Cover from '@/components/Cover.astro';
+import StatusTag from '@/components/StatusTag.astro';
+import PublicationCard from '@/components/PublicationCard.astro';
+import { getProjects, getPublications, type Localized } from '@/lib/content';
+import { t, localizePath, num, list } from '@/i18n/utils';
+import { projectCategories, languageNames, type Lang } from '@/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  project: Localized<'projects'>;
+}
+const { lang, project } = Astro.props;
+const d = project.data;
+const { Content } = await render(project.entry);
+
+const all = await getProjects(lang);
+const index = all.findIndex((p) => p.slug === project.slug);
+const next = all[(index + 1) % all.length];
+const related = (await getPublications(lang)).filter((p) => d.relatedPublications.includes(p.slug));
+const kicker = `${num(lang, index + 1, 2)} · ${projectCategories[d.category][lang]}`;
+const langs = d.languages.map((l) => languageNames[l][lang]);
+---
+<BaseLayout lang={lang} path={`/projects/${project.slug}/`} title={d.title} description={d.description ?? d.summary}
+  ogImage={d.cover?.src} ogType="article">
+  <div class="wrap">
+    <section class="detail-hero">
+      <div class="reveal">
+        <nav class="crumbs" aria-label="breadcrumb">
+          <a href={localizePath(lang, '/projects/')}>{t(lang, 'nav.projects')}</a><span aria-hidden="true">/</span><span>{num(lang, index + 1, 2)}</span>
+        </nav>
+        <h1>{d.title}</h1>
+        {d.altTitle && <p class="alt" lang={lang === 'ar' ? 'en' : 'ar'}>{d.altTitle}</p>}
+        <p class="lead">{d.summary}</p>
+      </div>
+      <div class="reveal reveal-2">
+        <Cover lang={lang} title={d.title} altTitle={d.altTitle} kicker={kicker} style={d.coverStyle} image={d.cover} imageAlt={d.coverAlt} shape="wide" eager />
+      </div>
+    </section>
+
+    <section class="case">
+      <dl class="facts">
+        <div><dt>{t(lang, 'detail.category')}</dt><dd>{projectCategories[d.category][lang]}</dd></div>
+        <div><dt>{t(lang, 'detail.status')}</dt><dd><StatusTag lang={lang} status={d.status} /></dd></div>
+        {langs.length > 0 && <div><dt>{t(lang, 'detail.languages')}</dt><dd>{list(lang, langs)}</dd></div>}
+        {d.year && <div><dt>{t(lang, 'detail.year')}</dt><dd>{d.year}</dd></div>}
+        {d.facts.map((f) => <div><dt>{f.label}</dt><dd>{f.value}</dd></div>)}
+        {
+          d.links.length > 0 && (
+            <div>
+              <dt>{t(lang, 'detail.links')}</dt>
+              <dd>{d.links.map((l) => <a class="link" href={l.url} rel="noopener" target="_blank" style="display:block">{l.label}</a>)}</dd>
+            </div>
+          )
+        }
+      </dl>
+      <article class="prose">
+        <Content />
+      </article>
+    </section>
+
+    {
+      d.gallery.length > 0 && (
+        <section class="section" aria-labelledby="gallery-title">
+          <div class="section-head"><h2 id="gallery-title">{t(lang, 'detail.gallery')}</h2></div>
+          <div class="gallery">
+            {d.gallery.map((g) => (
+              <figure>
+                <Image src={g.image} alt={g.alt} widths={[400, 800]} sizes="(max-width: 620px) 100vw, 33vw" />
+                {g.caption && <figcaption>{g.caption}</figcaption>}
+              </figure>
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    {
+      related.length > 0 && (
+        <section class="section" aria-labelledby="related-title">
+          <div class="section-head"><h2 id="related-title">{t(lang, 'detail.relatedPublications')}</h2></div>
+          <div class="pub-list">{related.map((pub) => <PublicationCard lang={lang} pub={pub} />)}</div>
+        </section>
+      )
+    }
+
+    {
+      next && next.slug !== project.slug && (
+        <a class="next-link" href={localizePath(lang, `/projects/${next.slug}/`)}>
+          <span>
+            <span class="label" style="display:block">{t(lang, 'detail.next')}</span>
+            <span class="t">{next.data.title}</span>
+          </span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      )
+    }
+  </div>
+</BaseLayout>
