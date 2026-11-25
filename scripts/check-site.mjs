@@ -38,7 +38,8 @@ for (const file of files) {
   if (/>\s*undefined\s*</.test(html) || /="undefined"/.test(html)) report('"undefined" in output');
 
   for (const [, tag] of html.matchAll(/(<img\b[^>]*>)/g)) {
-    if (!/\balt="/.test(tag)) report(`img without alt: ${tag.slice(0, 80)}`);
+    // alt="" (or a bare `alt`) is valid for decorative images whose title is printed beside them.
+    if (!/\salt(=|\s|>|\/)/.test(tag)) report(`img without alt: ${tag.slice(0, 80)}`);
     const src = tag.match(/\bsrc="([^"]+)"/)?.[1];
     if (src && src.startsWith('/') && !exists(src)) report(`missing image ${src}`);
   }

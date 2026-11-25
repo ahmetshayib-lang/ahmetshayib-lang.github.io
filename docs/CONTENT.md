@@ -35,8 +35,8 @@
 title: عنوان المشروع                  # مطلوب
 altTitle: PROJECT TITLE               # العنوان باللغة الأخرى (اختياري)
 summary: وصف قصير بجملة أو جملتين     # مطلوب — يظهر على البطاقة
-category: book                        # مطلوب: initiative | book | digital-book | content | engineering
-status: writing                       # مطلوب: published | ongoing | in-preparation | in-development | writing | archive
+category: initiative                  # مطلوب: initiative | book | digital-book | content | engineering
+status: ongoing                       # مطلوب: published | complete | ongoing | in-preparation | in-development | writing | archive
 languages: [ar, en, tr]               # لغات المشروع (اختياري)
 order: 6                              # ترتيب الظهور — الأصغر أولًا
 featured: true                        # يظهر في «مشاريع مختارة» على الرئيسية
@@ -72,25 +72,46 @@ draft: false                          # true = لا يُنشر على الموق
 مثل المشروع تمامًا، لكن داخل `src/content/publications/`. الحقول المختلفة:
 
 ```yaml
-type: booklet          # published | digital | in-development | children | booklet
-project: what-we-carry # اسم مجلد المشروع الذي ينتمي إليه (اختياري)
-subtitle: عنوان فرعي
-publisher: اسم الناشر
+type: book             # شكل العمل: book | digital-book | children | booklet
+status: complete       # حالته: published (منشور فعلًا) | complete (مكتمل) | in-development | writing
+audience: للكبار       # الجمهور (اختياري)
+project: what-we-carry # اسم مجلد المشروع أو المبادرة التي ينتمي إليها (اختياري)
+subtitle: عنوان فرعي   # يُكتب فقط إن كان عنوانًا فرعيًا معتمدًا للكتاب
+cover: ./cover.jpg     # الغلاف الرسمي فقط — بلا غلاف يظهر لوح محايد مكتوب عليه «الغلاف الرسمي يُضاف قريبًا»
+publisher: اسم الناشر  # فقط عند النشر الفعلي
 pages: 120
+links:                 # رابط القراءة أو الشراء — فقط إذا كان حقيقيًا ومعتمدًا
+  - label: اقرأ الكتاب
+    url: https://example.com
 ```
 
-تُجمَع الإصدارات تلقائيًا في صفحة «الإصدارات» حسب `type`:
-أعمال منشورة · إصدارات رقمية · كتب قيد الإعداد · أدب الأطفال · كتيّبات وأعمال تحريرية.
+- تُجمَع الإصدارات تلقائيًا في صفحة «الإصدارات» حسب `type` (كتب · كتب رقمية · أدب الأطفال · كتيّبات)، ولا تظهر المجموعات الفارغة.
+- الكتاب الذي له `project` يظهر تحت مشروعه في فهرس الرئيسية، وفي صفحة المشروع ضمن «إصدارات المبادرة/المشروع»، وتظهر في صفحته عبارة «من «اسم المشروع»».
+- أغلفة الكتب تُعرض كما هي دون قصّ.
+
+### صفحة «عنّي»
+
+في `src/content/pages/about/ar.md` و `en.md`:
+
+```yaml
+profile: الوصف المهني المعتمد
+vision: الرؤية المعتمدة
+visionNote: فقرة قصيرة بعد الرؤية
+areas:                       # مجالات العمل — كل واحد يمكن أن يربط بقسم في الموقع
+  - title: الإصدارات
+    text: وصف قصير
+    href: /publications/
+academic:                    # الخلفية الأكاديمية — محفوظة لكنها لا تظهر
+  published: false           # اجعلها true لإظهارها
+  entries:
+    - title: بكالوريوس الهندسة المدنية
+      institution: اسم الجامعة
+      years: ٢٠١٥–٢٠٢٠
+```
 
 ### المعلومات الناقصة
 
-لا يخترع الموقع أي معلومة. ما لم يُزوَّد بعد يظهر كخانة منقّطة واضحة:
-
-```html
-<p class="placeholder">يُستكمل لاحقًا: …</p>
-```
-
-ابحث في المشروع عن `placeholder` لتجد كل ما ينتظر معلومات منك، واستبدله بالنص الحقيقي.
+لا يخترع الموقع أي معلومة. إذا لم تتوفر معلومة، لا تُكتب الحقل أصلًا، فلا يظهر على الموقع.
 
 ---
 
@@ -128,5 +149,6 @@ npm run test:site
 - Copy an existing folder to add a project or publication; edit the front-matter fields shown above and write the story below it. No layout or code changes are needed.
 - Images go next to the Markdown file and are referenced as `./file.jpg`; Astro optimises them at build time.
 - Site-wide settings (email, social links) are in `src/config/site.ts`; UI strings in `src/i18n/ui.ts`.
-- Missing facts are shown as `<p class="placeholder">…</p>` — search for `placeholder` to find everything awaiting input.
+- Never invent facts: if a value is unknown, leave the field out and it won't appear. Books without an official cover show a neutral plate saying the cover is coming.
+- Academic background lives in `pages/about/*.md` under `academic:` and stays hidden while `published: false`.
 - `npm run dev` to preview, `npm run test:site` to build and check, `git push` to deploy.

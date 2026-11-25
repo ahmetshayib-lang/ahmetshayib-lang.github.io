@@ -58,4 +58,4 @@ Every page links to its counterpart with `hreflang`; the language switcher keeps
 
 ## Content rules
 
-No facts are invented. Anything not yet supplied is shown on the site as a visible placeholder (`class="placeholder"`). See [docs/CONTENT.md](docs/CONTENT.md).
+No facts are invented: unknown values are simply left out. Book covers are shown only from original files; a book without one gets a neutral “cover coming soon” plate. See [docs/CONTENT.md](docs/CONTENT.md).
