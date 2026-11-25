@@ -78,6 +78,12 @@ const otherLang = lang === 'ar' ? 'en' : 'ar';
             <p class="label">{projectCategories[wwc.data.category][lang]}</p>
             <h2 id="wwc-title">{wwc.data.title}{wwc.data.altTitle && <small lang={otherLang}>{wwc.data.altTitle}</small>}</h2>
             <p class="feature-lead">{wwc.data.summary}</p>
+            {wwc.data.campaign && (
+              <p class="feature-rel">
+                <span class="label">{t(lang, 'campaign.link')}</span>{' '}
+                <a class="link" href={localizePath(lang, `/projects/${wwc.slug}/#${wwc.data.campaign.id}`)}>{wwc.data.campaign.title}</a>
+              </p>
+            )}
             <a class="btn btn-light" href={localizePath(lang, `/projects/${wwc.slug}/`)}>
               {t(lang, 'home.cta.initiative')} <span class="arrow" aria-hidden="true">→</span>
             </a>

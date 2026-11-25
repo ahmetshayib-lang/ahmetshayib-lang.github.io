@@ -16,7 +16,7 @@ import { z } from 'astro/zod';
 
 const langs = z.enum(['ar', 'en', 'tr']);
 const status = z.enum(['published', 'complete', 'ongoing', 'in-preparation', 'in-development', 'writing', 'archive']);
-const coverStyle = z.enum(['wwc', 'angle', 'life', 'mattah', 'eng', 'plain']);
+const coverStyle = z.enum(['wwc', 'angle', 'life', 'mate', 'eng', 'plain']);
 const link = z.object({ label: z.string(), url: z.url() });
 const fact = z.object({ label: z.string(), value: z.string() });
 
@@ -47,6 +47,25 @@ const projects = defineCollection({
       year: z.string().optional(),
       facts: z.array(fact).default([]),
       description: z.string().optional(),
+      /**
+       * A campaign run under this project (shown as its own section on the project page).
+       * The logo is the campaign's official artwork: shown as supplied, never cropped or redrawn.
+       */
+      campaign: z
+        .object({
+          /** Anchor id for links, e.g. "syria-from-the-heart". */
+          id: z.string(),
+          title: z.string(),
+          altTitle: z.string().optional(),
+          lead: z.string(),
+          text: z.array(z.string()).default([]),
+          /** What the campaign is made of: name + one line each. */
+          parts: z.array(z.object({ title: z.string(), text: z.string() })).default([]),
+          logo: image().optional(),
+          logoAlt: z.string().optional(),
+          links: z.array(link).default([]),
+        })
+        .optional(),
       draft: z.boolean().default(false),
     }),
 });

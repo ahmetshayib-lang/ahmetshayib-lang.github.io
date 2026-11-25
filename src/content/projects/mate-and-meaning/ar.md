@@ -1,6 +1,6 @@
 ---
 title: متّة ومعنى
-altTitle: MATTAH WA MAʿNA
+altTitle: MATE & MEANING
 summary: هوية محتوى ثقافية واجتماعية وفكرية تنظر إلى المألوف من زاوية أخرى — عن الافتراضات الاجتماعية، والقضايا الثقافية، والسلوك الإنساني، وأسئلة الحياة اليومية.
 category: content
 status: ongoing
@@ -8,7 +8,7 @@ languages: [ar]
 order: 2
 featured: true
 initiative: true
-coverStyle: mattah
+coverStyle: mate
 relatedPublications: [from-another-angle]
 description: «متّة ومعنى» هوية محتوى ثقافية واجتماعية وفكرية تنظر إلى المألوف من زاوية أخرى، ومنها كتاب «من زاوية أخرى».
 ---

@@ -868,11 +868,11 @@ html[lang='en'] .cv-angle .c-title {
 .cv-life .c-title {
   font-size: clamp(1.9rem, 1.4rem + 1.5vw, 2.6rem);
 }
-.cv-mattah {
+.cv-mate {
   background: #eadccb;
   color: var(--charcoal);
 }
-.cv-mattah .disc {
+.cv-mate .disc {
   position: absolute;
   width: 62%;
   aspect-ratio: 1;
@@ -882,7 +882,7 @@ html[lang='en'] .cv-angle .c-title {
   inset-inline-end: -12%;
   top: -10%;
 }
-.cv-mattah .c-title {
+.cv-mate .c-title {
   font-family: var(--serif);
   font-size: clamp(2.2rem, 1.6rem + 2vw, 3rem);
 }
@@ -1498,5 +1498,218 @@ html[lang='ar'] .areas .a-text {
   *::after {
     animation: none !important;
     transition: none !important;
+  }
+}
+
+/* ---------- Campaign band (project page) ----------
+   A campaign that belongs to a project, e.g. Syria from the Heart under What We Carry.
+   Same palette as the What We Carry feature band, so the two read as one family.
+   The logo is official artwork: shown at its own proportions, never cropped. */
+.campaign {
+  background: var(--wwc-basalt);
+  color: var(--wwc-paper);
+  padding-block: var(--s6);
+  scroll-margin-top: 4rem;
+}
+.campaign .label {
+  color: var(--wwc-apricot);
+}
+.campaign-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: var(--s5);
+  align-items: center;
+}
+.campaign-logo img {
+  display: block;
+  width: 100%;
+  max-width: 24rem;
+  height: auto;
+  margin-inline: auto;
+}
+.campaign-text {
+  display: grid;
+  gap: var(--s3);
+  justify-items: start;
+  max-width: 40rem;
+}
+.campaign-text h2 {
+  font-size: var(--fs-h1);
+  line-height: var(--head-lh);
+  font-weight: 600;
+  color: var(--wwc-paper);
+}
+.campaign-text h2 small {
+  display: block;
+  font-family: var(--font-en-sans);
+  font-size: 0.8125rem;
+  letter-spacing: 0.2em;
+  font-weight: 500;
+  margin-top: var(--s1);
+  color: var(--wwc-apricot);
+}
+html[lang='en'] .campaign-text h2 small {
+  font-family: var(--font-ar-sans);
+  letter-spacing: 0;
+  font-size: 1rem;
+}
+.campaign-lead {
+  font-size: var(--fs-lead);
+  line-height: 1.55;
+}
+.campaign-text > p:not(.label):not(.campaign-lead) {
+  color: var(--wwc-sand);
+  line-height: 1.75;
+}
+.campaign-text h3.label {
+  margin-top: var(--s2);
+}
+.campaign-parts {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  border-top: 1px solid rgb(246 241 231 / 0.2);
+}
+.campaign-parts li {
+  display: grid;
+  grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
+  gap: var(--s1) var(--s3);
+  padding-block: 0.85rem;
+  border-bottom: 1px solid rgb(246 241 231 / 0.2);
+}
+.cp-title {
+  font-weight: 600;
+}
+.cp-text {
+  font-family: var(--sans);
+  font-size: 0.9375rem;
+  color: var(--wwc-sand);
+  line-height: 1.6;
+}
+.campaign-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2);
+}
+
+/* Initiative → campaign + books */
+.family-head {
+  display: block;
+  margin-top: var(--s6);
+  margin-bottom: var(--s3);
+}
+.family {
+  display: grid;
+  justify-items: center;
+}
+.family a {
+  display: grid;
+  gap: 0.3rem;
+  text-decoration: none;
+  color: inherit;
+  padding: var(--s2) var(--s3);
+  border: 1px solid rgb(246 241 231 / 0.25);
+  transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+}
+.family a:hover,
+.family a:focus-visible {
+  border-color: var(--wwc-apricot);
+  background: rgb(246 241 231 / 0.06);
+}
+.family-root {
+  text-align: center;
+  border-color: var(--wwc-apricot) !important;
+  min-width: min(100%, 18rem);
+  position: relative;
+}
+.family-root::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 100%;
+  inset-inline-start: 50%;
+  width: 1px;
+  height: var(--s3);
+  background: rgb(246 241 231 / 0.35);
+}
+.fam-role {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  letter-spacing: var(--track-label);
+  color: var(--wwc-apricot);
+}
+html[lang='en'] .fam-role {
+  text-transform: uppercase;
+}
+.fam-title {
+  font-size: 1.15rem;
+  line-height: 1.35;
+}
+.fam-title small {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--wwc-sand);
+  letter-spacing: 0.12em;
+}
+.family-branches {
+  list-style: none;
+  margin: var(--s3) 0 0;
+  padding: var(--s3) 0 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s3);
+  border-top: 1px solid rgb(246 241 231 / 0.35);
+  position: relative;
+}
+.family-branches li {
+  position: relative;
+  display: grid;
+}
+.family-branches li::before {
+  content: '';
+  position: absolute;
+  inset-block-end: 100%;
+  inset-inline-start: 50%;
+  width: 1px;
+  height: var(--s3);
+  background: rgb(246 241 231 / 0.35);
+}
+.family-branches a {
+  text-align: center;
+}
+@media (max-width: 860px) {
+  .campaign-inner {
+    grid-template-columns: 1fr;
+  }
+  .campaign-logo img {
+    max-width: 16rem;
+  }
+  .campaign-parts li {
+    grid-template-columns: 1fr;
+  }
+  .family-branches {
+    grid-template-columns: 1fr;
+    border-top: 0;
+    border-inline-start: 1px solid rgb(246 241 231 / 0.35);
+    padding: 0;
+    padding-inline-start: var(--s3);
+    margin-top: var(--s3);
+  }
+  .family-branches li::before {
+    inset-block-end: auto;
+    inset-block-start: 50%;
+    inset-inline-start: calc(-1 * var(--s3));
+    width: var(--s3);
+    height: 1px;
+  }
+  .family-branches a {
+    text-align: start;
+  }
+  .family-root::after {
+    inset-inline-start: 0;
+  }
+  .family {
+    justify-items: stretch;
   }
 }

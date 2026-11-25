@@ -43,7 +43,7 @@ featured: true                        # يظهر في «مشاريع مختار�
 initiative: false                     # true = يظهر في صفحة «أفكار ومبادرات»
 cover: ./cover.jpg                    # صورة الغلاف (اختياري)
 coverAlt: وصف الصورة لقارئات الشاشة    # مطلوب إذا وُجدت صورة
-coverStyle: plain                     # غلاف نصّي عند غياب الصورة: wwc | angle | life | mattah | eng | plain
+coverStyle: plain                     # غلاف نصّي عند غياب الصورة: wwc | angle | life | mate | eng | plain
 gallery:                              # معرض صور (اختياري)
   - image: ./photo-1.jpg
     alt: وصف الصورة
@@ -57,6 +57,20 @@ facts:                                # معلومات إضافية تظهر ف�
   - label: الجمهور
     value: الكبار
 description: وصف لمحركات البحث (اختياري — وإلا يُستخدم summary)
+campaign:                             # حملة تابعة للمشروع (اختياري) — قسم داكن في صفحة المشروع
+  id: syria-from-the-heart            # يُستخدم رابطًا: /projects/what-we-carry/#syria-from-the-heart
+  title: اسم الحملة
+  altTitle: CAMPAIGN NAME
+  lead: جملة تعريفية
+  text: [فقرة, فقرة]
+  parts:                              # مكوّنات الحملة
+    - title: الفيلم الرئيسي
+      text: سطر واحد
+  logo: ./logo.png                    # الشعار الرسمي كما هو — لا يُقصّ ولا يُعدَّل
+  logoAlt: وصف الشعار
+  links:                              # مثلًا رابط الفيلم أو الهدية الرقمية
+    - label: شاهد الفيلم
+      url: https://example.com
 draft: false                          # true = لا يُنشر على الموقع
 ---
 

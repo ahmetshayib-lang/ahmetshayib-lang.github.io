@@ -23,6 +23,8 @@ const next = all[(index + 1) % all.length];
 const related = (await getPublications(lang)).filter((p) => d.relatedPublications.includes(p.slug));
 const kicker = `${num(lang, index + 1, 2)} · ${projectCategories[d.category][lang]}`;
 const langs = d.languages.map((l) => languageNames[l][lang]);
+const c = d.campaign;
+const otherLang = lang === 'ar' ? 'en' : 'ar';
 ---
 <BaseLayout lang={lang} path={`/projects/${project.slug}/`} title={d.title} description={d.description ?? d.summary}
   ogImage={d.cover?.src} ogType="article">
@@ -62,6 +64,73 @@ const langs = d.languages.map((l) => languageNames[l][lang]);
       </article>
     </section>
 
+  </div>
+
+  {
+    c && (
+      <section class="campaign" id={c.id} aria-labelledby="campaign-title">
+        <div class="wrap campaign-inner">
+          {c.logo && (
+            <div class="campaign-logo">
+              <Image src={c.logo} alt={c.logoAlt ?? c.title} widths={[320, 480, 640, 960]} sizes="(max-width: 860px) 70vw, 24rem" />
+            </div>
+          )}
+          <div class="campaign-text">
+            <p class="label">{t(lang, 'campaign.label')}</p>
+            <h2 id="campaign-title">
+              {c.title}
+              {c.altTitle && <small lang={otherLang}>{c.altTitle}</small>}
+            </h2>
+            <p class="campaign-lead">{c.lead}</p>
+            {c.text.map((p) => <p>{p}</p>)}
+            {c.parts.length > 0 && (
+              <>
+                <h3 class="label">{t(lang, 'campaign.parts')}</h3>
+                <ul class="campaign-parts">
+                  {c.parts.map((part) => (
+                    <li><span class="cp-title">{part.title}</span><span class="cp-text">{part.text}</span></li>
+                  ))}
+                </ul>
+              </>
+            )}
+            {c.links.length > 0 && (
+              <p class="campaign-links">
+                {c.links.map((l) => <a class="btn btn-light" href={l.url} rel="noopener" target="_blank">{l.label} <span class="arrow" aria-hidden="true">→</span></a>)}
+              </p>
+            )}
+          </div>
+        </div>
+
+        <div class="wrap">
+          <h3 class="label family-head">{t(lang, 'campaign.structure')}</h3>
+          <div class="family">
+            <a class="family-root" href={localizePath(lang, `/projects/${project.slug}/`)}>
+              <span class="fam-role">{t(lang, 'campaign.initiative')}</span>
+              <span class="fam-title">{d.title}{d.altTitle && <small lang={otherLang}>{d.altTitle}</small>}</span>
+            </a>
+            <ul class="family-branches">
+              <li>
+                <a href={`#${c.id}`}>
+                  <span class="fam-role">{t(lang, 'campaign.campaign')}</span>
+                  <span class="fam-title">{c.title}</span>
+                </a>
+              </li>
+              {related.map((pub) => (
+                <li>
+                  <a href={localizePath(lang, `/publications/${pub.slug}/`)}>
+                    <span class="fam-role">{t(lang, pub.data.type === 'children' ? 'campaign.childrenBook' : 'campaign.adultBook')}</span>
+                    <span class="fam-title">{pub.data.title}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <div class="wrap">
     {
       d.gallery.length > 0 && (
         <section class="section" aria-labelledby="gallery-title">

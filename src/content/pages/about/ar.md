@@ -13,7 +13,7 @@ areas:
     href: /publications/
   - title: صناعة المحتوى
     text: محتوى ثقافي واجتماعي وفكري تحت هوية «متّة ومعنى»، ينظر إلى المألوف من زاوية أخرى.
-    href: /projects/mattah-wa-maana/
+    href: /projects/mate-and-meaning/
   - title: المشاريع الإبداعية
     text: لكل فكرة الشكل الذي يناسبها — كتاب، أو قصة، أو هوية محتوى، أو مبادرة.
     href: /projects/

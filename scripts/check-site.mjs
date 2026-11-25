@@ -27,6 +27,13 @@ for (const file of files) {
   const isEn = page.startsWith('/en/');
   const report = (msg) => problems.push(`${page}: ${msg}`);
 
+  // Redirect stubs (from `redirects` in astro.config.mjs): only check that the target exists.
+  const refresh = html.match(/<meta http-equiv="refresh" content="\d+;url=([^"]+)"/)?.[1];
+  if (refresh) {
+    if (!exists(refresh)) report(`redirect to missing page ${refresh}`);
+    continue;
+  }
+
   const htmlTag = html.match(/<html[^>]*>/)?.[0] ?? '';
   if (!htmlTag.includes(`lang="${isEn ? 'en' : 'ar'}"`)) report('wrong <html lang>');
   if (!htmlTag.includes(`dir="${isEn ? 'ltr' : 'rtl'}"`)) report('wrong <html dir>');

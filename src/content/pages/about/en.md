@@ -12,8 +12,8 @@ areas:
     text: Four completed books, from reflective non-fiction to a story for children.
     href: /publications/
   - title: Content creation
-    text: Cultural, social and intellectual content under the متّة ومعنى identity — familiar subjects, seen from another angle.
-    href: /projects/mattah-wa-maana/
+    text: Cultural, social and intellectual content under the Mate & Meaning (متّة ومعنى) identity — familiar subjects, seen from another angle.
+    href: /projects/mate-and-meaning/
   - title: Creative projects
     text: Every idea in the form that suits it — a book, a story, a content identity or an initiative.
     href: /projects/

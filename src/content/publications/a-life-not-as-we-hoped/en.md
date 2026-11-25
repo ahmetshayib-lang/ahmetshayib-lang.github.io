@@ -6,6 +6,8 @@ type: book
 status: complete
 order: 4
 featured: true
+cover: ./cover.jpg
+coverAlt: Cover of حياة لم تكن كما أردنا (A Life Not as We Hoped) — a dark navy wall and an open door spilling warm light across the floor, with the Arabic title above and the author's name below.
 description: A Life Not as We Hoped (حياة لم تكن كما أردنا) is an intellectual and literary book on actual and imagined lives, drawing on psychology, sociology, philosophy and faith.
 ---
 

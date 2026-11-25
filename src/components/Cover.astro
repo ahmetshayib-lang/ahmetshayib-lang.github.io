@@ -13,7 +13,7 @@ interface Props {
   title: string;
   altTitle?: string;
   kicker?: string;
-  style?: 'wwc' | 'angle' | 'life' | 'mattah' | 'eng' | 'plain';
+  style?: 'wwc' | 'angle' | 'life' | 'mate' | 'eng' | 'plain';
   image?: ImageMetadata;
   imageAlt?: string;
   shape?: 'default' | 'wide' | 'book';
@@ -42,7 +42,7 @@ const sizes =
       )}
       {style === 'angle' && (<><span class="frame" /><span class="frame2" /></>)}
       {style === 'life' && <span class="line" />}
-      {style === 'mattah' && <span class="disc" />}
+      {style === 'mate' && <span class="disc" />}
       <span class="c-num">{kicker}</span>
       {style === 'wwc' ? (
         <span class="c-title">{title}{altTitle && <em lang={lang === 'ar' ? 'en' : 'ar'}>{altTitle}</em>}</span>

@@ -1,0 +1,5 @@
+# Permanent redirects (Cloudflare Pages). The meta-refresh pages from astro.config.mjs are a fallback.
+/projects/mattah-wa-maana /projects/mate-and-meaning/ 301
+/projects/mattah-wa-maana/ /projects/mate-and-meaning/ 301
+/en/projects/mattah-wa-maana /en/projects/mate-and-meaning/ 301
+/en/projects/mattah-wa-maana/ /en/projects/mate-and-meaning/ 301

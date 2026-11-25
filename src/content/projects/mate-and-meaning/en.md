@@ -1,5 +1,5 @@
 ---
-title: Mattah wa Maʿna
+title: Mate & Meaning
 altTitle: متّة ومعنى
 summary: A cultural, social and intellectual content identity that looks at the familiar from another angle — social assumptions, cultural issues, human behaviour and everyday questions.
 category: content
@@ -8,14 +8,14 @@ languages: [ar]
 order: 2
 featured: true
 initiative: true
-coverStyle: mattah
+coverStyle: mate
 relatedPublications: [from-another-angle]
-description: Mattah wa Maʿna (متّة ومعنى) is a cultural, social and intellectual content identity that looks at familiar subjects from another angle. The book From Another Angle belongs to it.
+description: Mate & Meaning (متّة ومعنى) is a cultural, social and intellectual content identity that looks at familiar subjects from another angle. The book From Another Angle belongs to it.
 ---
 
 ## A calm conversation around a question
 
-*Mattah wa Maʿna* (متّة ومعنى — literally “mate and meaning”) is both a content project and a creative media identity. Think of a quiet gathering over a cup of mate: a warm conversation that doesn't stop at the surface.
+*Mate & Meaning* (متّة ومعنى) is both a content project and a creative media identity. Think of a quiet gathering over a cup of mate: a warm conversation that doesn't stop at the surface.
 
 ## What it explores
 
@@ -25,6 +25,6 @@ description: Mattah wa Maʿna (متّة ومعنى) is a cultural, social and in
 - **Everyday intellectual questions.**
 - **Different ways of looking** at familiar subjects.
 
-## From Mattah wa Maʿna
+## From Mate & Meaning
 
 The book **From Another Angle** belongs to this identity: a journey through the ideas we live by without noticing.

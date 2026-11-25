@@ -2,10 +2,10 @@
 title: From Another Angle
 altTitle: من زاوية أخرى
 subtitle: A journey through the ideas we live by without noticing
-summary: A reflective book from Mattah wa Maʿna about the ideas we live by without noticing — how we see, why we judge, and where our convictions come from.
+summary: A reflective book from Mate & Meaning about the ideas we live by without noticing — how we see, why we judge, and where our convictions come from.
 type: digital-book
 status: complete
-project: mattah-wa-maana
+project: mate-and-meaning
 languages: [ar]
 order: 3
 featured: true
@@ -14,7 +14,7 @@ coverAlt: Cover of من زاوية أخرى (From Another Angle) — a burgundy 
 facts:
   - label: Structure
     value: Eighteen chapters in six parts
-description: From Another Angle (من زاوية أخرى) is a reflective book from Mattah wa Maʿna — a journey through the ideas we live by without noticing.
+description: From Another Angle (من زاوية أخرى) is a reflective book from Mate & Meaning — a journey through the ideas we live by without noticing.
 ---
 
 ## About the book

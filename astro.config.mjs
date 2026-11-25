@@ -10,6 +10,11 @@ export default defineConfig({
   site: SITE,
   trailingSlash: 'ignore',
   build: { format: 'directory' },
+  // Old URLs keep working after a slug change.
+  redirects: {
+    '/projects/mattah-wa-maana': '/projects/mate-and-meaning/',
+    '/en/projects/mattah-wa-maana': '/en/projects/mate-and-meaning/',
+  },
   i18n: {
     locales: ['ar', 'en'],
     defaultLocale: 'ar',

@@ -8,8 +8,8 @@ status: complete
 project: what-we-carry
 order: 2
 featured: true
-cover: ./cover.jpg
-coverAlt: Cover of سرّ الخريطة التي لا تكتمل (The Secret of the Incomplete Map) — two children in an attic open an inlaid box and read a map, while a round window looks out on Syrian landscapes.
+cover: ./cover-en.webp
+coverAlt: English cover of The Secret of the Incomplete Map — two children in an attic open an inlaid box and read a map, while a round window looks out on Syrian landscapes; the title is above and “Written by Ahmad Shuaib” below.
 description: The Secret of the Incomplete Map (سرّ الخريطة التي لا تكتمل) is a completed children's story from the What We Carry initiative.
 ---
 

@@ -5,7 +5,7 @@ subtitle: رحلة في الأفكار التي نعيش بها دون أن نن
 summary: كتاب فكري تأمّلي من «متّة ومعنى» عن الأفكار التي نعيش بها دون أن ننتبه إليها — كيف نرى، ولماذا نحكم، ومن أين جاءت قناعاتنا.
 type: digital-book
 status: complete
-project: mattah-wa-maana
+project: mate-and-meaning
 languages: [ar]
 order: 3
 featured: true
