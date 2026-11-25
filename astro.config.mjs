@@ -3,8 +3,10 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
-// Production URL. Update this once the Cloudflare Pages address (or a custom domain) is known.
-const SITE = process.env.SITE_URL ?? 'https://ahmad-shuaib.pages.dev';
+// Primary (canonical) address. The site is also mirrored on Cloudflare Pages
+// (ahmad-shuaib.pages.dev); both builds point search engines here.
+// Change this if a custom domain is added later.
+const SITE = process.env.SITE_URL ?? 'https://ahmetshayib-lang.github.io';
 
 export default defineConfig({
   site: SITE,

@@ -25,7 +25,7 @@ const other = otherLang(lang);
 const siteName = t(lang, 'site.name');
 const fullTitle = title ? `${title} — ${siteName}` : `${siteName} — ${t(lang, 'site.tagline')}`;
 const desc = description ?? t(lang, 'site.description');
-const site = Astro.site ?? new URL('https://ahmad-shuaib.pages.dev');
+const site = Astro.site ?? new URL('https://ahmetshayib-lang.github.io');
 const canonical = new URL(localizePath(lang, path), site).href;
 const hrefAr = new URL(localizePath('ar', lang === 'ar' ? path : altPath), site).href;
 const hrefEn = new URL(localizePath('en', lang === 'en' ? path : altPath), site).href;

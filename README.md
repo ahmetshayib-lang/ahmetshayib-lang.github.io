@@ -4,7 +4,7 @@
 
 A bilingual (Arabic default / English) personal creative platform: writing and publishing, cultural and humanitarian initiatives, intellectual projects, and engineering and academic work.
 
-Built with **Astro**, **TypeScript**, **Tailwind CSS** and **Astro Content Collections**. Fully static, self-hosted free fonts, no database, no paid services. Deployed on **Cloudflare Pages** (free plan).
+Built with **Astro**, **TypeScript**, **Tailwind CSS** and **Astro Content Collections**. Fully static, self-hosted free fonts, no database, no paid services. Published at **https://ahmetshayib-lang.github.io/** (GitHub Pages, via GitHub Actions) and mirrored at **https://ahmad-shuaib.pages.dev/** (Cloudflare Pages). Both free; see [docs/DEPLOY.md](docs/DEPLOY.md).
 
 ## Quick start
 
