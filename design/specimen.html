@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AHMAD SHUAIB — Design Specimen v0.1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400..700&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=Reem+Kufi:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   AHMAD SHUAIB — DESIGN TOKENS v0.1
+   These tokens move 1:1 into the Astro/Tailwind theme.
+   ============================================================ */
+:root{
+  /* Brand palette (from the brief) */
+  --burgundy:#4A2635;
+  --beige:#F2EAE0;
+  --ivory:#FAF8F4;
+  --charcoal:#282428;
+  --rose:#B99A9E;
+  /* Derived, contrast-checked */
+  --rose-ink:#7C5B61;      /* rose for small text: 5.3:1 on ivory (brand rose is 2.4:1, decorative only) */
+  --muted:#6B6266;         /* secondary text: 5.5:1 on ivory */
+  --rule:#DDD2C6;          /* hairlines */
+  --burgundy-deep:#3A1D29; /* hover / pressed */
+
+  /* Type families */
+  --ar-serif:"Markazi Text", "Noto Naskh Arabic", serif;
+  --ar-sans:"IBM Plex Sans Arabic", "Segoe UI", sans-serif;
+  --en-serif:"Newsreader", Georgia, serif;
+  --en-sans:"IBM Plex Sans", "Segoe UI", sans-serif;
+
+  /* Fluid type scale */
+  --fs-display:clamp(3rem, 1.4rem + 6.4vw, 7.25rem);
+  --fs-h1:clamp(2.25rem, 1.5rem + 3vw, 4rem);
+  --fs-h2:clamp(1.75rem, 1.35rem + 1.6vw, 2.625rem);
+  --fs-h3:clamp(1.3rem, 1.15rem + .6vw, 1.625rem);
+  --fs-lead:clamp(1.25rem, 1.1rem + .6vw, 1.5rem);
+  --fs-label:.8125rem;
+
+  /* Spacing (8px base) */
+  --s1:.5rem; --s2:1rem; --s3:1.5rem; --s4:2rem; --s5:3rem; --s6:4.5rem; --s7:7rem;
+  --gutter:clamp(1rem, .5rem + 2.5vw, 3rem);
+  --max:80rem;
+  --measure:38rem;
+
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+
+/* ---------- Language rules ---------- */
+html[lang="ar"]{ --serif:var(--ar-serif); --sans:var(--ar-sans); --body-size:1.3125rem; --body-lh:1.85; --head-lh:1.25; --track-label:0; }
+html[lang="en"]{ --serif:var(--en-serif); --sans:var(--en-sans); --body-size:1.125rem;  --body-lh:1.65; --head-lh:1.08; --track-label:.14em; }
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--ivory);color:var(--charcoal);-webkit-text-size-adjust:100%}
+body{font-family:var(--serif);font-size:var(--body-size);line-height:var(--body-lh);background:var(--ivory);
+  text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+img{max-width:100%;display:block}
+:focus-visible{outline:2px solid var(--burgundy);outline-offset:3px}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gutter)}
+.label{font-family:var(--sans);font-size:var(--fs-label);letter-spacing:var(--track-label);font-weight:500;color:var(--rose-ink)}
+html[lang="en"] .label{text-transform:uppercase}
+.rule{border:0;border-top:1px solid var(--rule)}
+.num{font-family:var(--sans);font-feature-settings:"tnum";font-weight:500}
+
+/* ---------- Specimen chrome (not part of the site) ---------- */
+.spec-bar{position:sticky;top:0;z-index:50;background:var(--charcoal);color:var(--beige);font-family:var(--en-sans);font-size:.8125rem;direction:ltr}
+.spec-bar .wrap{display:flex;gap:1rem;align-items:center;justify-content:space-between;min-height:2.5rem;flex-wrap:wrap}
+.spec-bar button{font:inherit;background:transparent;color:var(--beige);border:1px solid #5a5157;padding:.25rem .75rem;cursor:pointer}
+.spec-bar button[aria-pressed="true"]{background:var(--beige);color:var(--charcoal)}
+.spec-section-title{padding-block:var(--s6) var(--s3);display:flex;gap:var(--s2);align-items:baseline;border-bottom:1px solid var(--charcoal);margin-bottom:var(--s4)}
+.spec-section-title h2{font-family:var(--sans);font-size:.875rem;font-weight:600;letter-spacing:var(--track-label)}
+html[lang="en"] .spec-section-title h2{text-transform:uppercase}
+
+/* ============================================================
+   COMPONENTS
+   ============================================================ */
+
+/* ---- Masthead / navigation ---- */
+.masthead{border-bottom:1px solid var(--rule);background:var(--ivory)}
+.masthead .wrap{display:grid;grid-template-columns:1fr auto;align-items:center;gap:var(--s3);min-height:5rem}
+.wordmark{text-decoration:none;display:flex;flex-direction:column;line-height:1}
+.wordmark .en{font-family:var(--en-serif);font-weight:500;font-size:1.125rem;letter-spacing:.32em;color:var(--burgundy)}
+.wordmark .ar{font-family:var(--ar-serif);font-weight:600;font-size:1.5rem;color:var(--burgundy)}
+.wordmark .sub{font-family:var(--sans);font-size:.6875rem;color:var(--muted);margin-top:.4rem;letter-spacing:var(--track-label)}
+html[lang="en"] .wordmark .sub{text-transform:uppercase}
+.nav{display:flex;align-items:center;gap:var(--s4)}
+.nav ul{list-style:none;display:flex;gap:var(--s3)}
+.nav a{font-family:var(--sans);font-size:.9375rem;text-decoration:none;color:var(--charcoal);padding-block:.5rem;background:linear-gradient(var(--burgundy),var(--burgundy)) no-repeat;background-size:0 1px;background-position:100% 100%;transition:background-size .35s var(--ease)}
+html[dir="ltr"] .nav a{background-position:0 100%}
+.nav a:hover,.nav a[aria-current="page"]{background-size:100% 1px;color:var(--burgundy)}
+.lang-switch{font-family:var(--sans);font-size:.8125rem;display:flex;border:1px solid var(--rule)}
+.lang-switch a{padding:.35rem .7rem;text-decoration:none;color:var(--muted)}
+.lang-switch a[aria-current="true"]{background:var(--burgundy);color:var(--ivory)}
+.menu-btn{display:none;font-family:var(--sans);font-size:.875rem;background:none;border:1px solid var(--charcoal);padding:.4rem .9rem;cursor:pointer}
+@media (max-width:900px){ .nav ul{display:none} .menu-btn{display:inline-block} }
+
+/* ---- Hero ---- */
+.hero{padding-block:var(--s7) var(--s6);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,18rem);gap:var(--s5);align-items:end}
+.hero h1{font-family:var(--serif);font-size:var(--fs-display);line-height:1;font-weight:600;color:var(--burgundy);letter-spacing:-.01em}
+html[lang="ar"] .hero h1{letter-spacing:0;line-height:1.15}
+.hero h1 span{display:block}
+.hero h1 span:nth-child(2){color:var(--charcoal);padding-inline-start:.6em}
+.hero h1 span:nth-child(3){color:var(--rose);padding-inline-start:1.2em}
+.hero aside{border-inline-start:1px solid var(--burgundy);padding-inline-start:var(--s3)}
+.hero aside p{font-size:var(--fs-lead);line-height:1.5;color:var(--charcoal)}
+@media (max-width:800px){ .hero{grid-template-columns:1fr;padding-block:var(--s6) var(--s5)} }
+
+/* ---- Contents index (signature element) ---- */
+.contents{list-style:none;border-top:1px solid var(--charcoal)}
+.contents li a{display:grid;grid-template-columns:4rem minmax(0,1fr) minmax(0,14rem) 2rem;gap:var(--s3);align-items:baseline;padding-block:var(--s3);border-bottom:1px solid var(--rule);text-decoration:none;transition:background .3s var(--ease),padding .3s var(--ease)}
+.contents li a:hover{background:var(--beige);padding-inline:var(--s2)}
+.contents .num{color:var(--rose-ink);font-size:.9375rem}
+.contents .t{font-size:var(--fs-h3);line-height:1.3;font-weight:600;color:var(--charcoal)}
+.contents .t small{display:block;font-family:var(--sans);font-size:.8125rem;font-weight:400;color:var(--muted);margin-top:.25rem}
+.contents .cat{font-family:var(--sans);font-size:.875rem;color:var(--muted)}
+.contents .arrow{color:var(--burgundy);transition:transform .3s var(--ease)}
+html[dir="rtl"] .arrow{transform:scaleX(-1)}
+.contents li a:hover .arrow{transform:translateX(.35rem)}
+html[dir="rtl"] .contents li a:hover .arrow{transform:scaleX(-1) translateX(.35rem)}
+@media (max-width:700px){ .contents li a{grid-template-columns:2.5rem minmax(0,1fr) 1.5rem} .contents .cat{display:none} }
+
+/* ---- Type specimen ---- */
+.type-grid{display:grid;grid-template-columns:12rem minmax(0,1fr);gap:var(--s3) var(--s4);align-items:baseline}
+.type-grid .meta{font-family:var(--en-sans);font-size:.75rem;color:var(--muted);direction:ltr;text-align:start}
+.t-display{font-size:var(--fs-display);line-height:1.05;font-weight:600;color:var(--burgundy)}
+.t-h1{font-size:var(--fs-h1);line-height:var(--head-lh);font-weight:600}
+.t-h2{font-size:var(--fs-h2);line-height:var(--head-lh);font-weight:500}
+.t-h3{font-size:var(--fs-h3);line-height:1.3;font-weight:600}
+.t-lead{font-size:var(--fs-lead);line-height:1.55;color:var(--charcoal)}
+.t-body{max-width:var(--measure)}
+.t-body p+p{margin-top:1em}
+html[lang="en"] .t-body p+p{margin-top:0;text-indent:1.5em}
+@media (max-width:700px){ .type-grid{grid-template-columns:1fr;gap:var(--s1)} .type-grid .meta{margin-top:var(--s3)} }
+
+/* ---- Colour swatches ---- */
+.swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:var(--s2)}
+.sw{border:1px solid var(--rule)}
+.sw .chip{aspect-ratio:4/3;display:flex;align-items:flex-end;padding:var(--s2);font-family:var(--serif);font-size:1.5rem}
+.sw .info{padding:var(--s2);font-family:var(--en-sans);font-size:.75rem;line-height:1.5;color:var(--muted);direction:ltr;text-align:left}
+.sw .info b{display:block;color:var(--charcoal);font-size:.8125rem}
+
+/* ---- Buttons & links ---- */
+.btn-row{display:flex;flex-wrap:wrap;gap:var(--s3);align-items:center}
+.btn{display:inline-flex;align-items:center;gap:.75rem;font-family:var(--sans);font-size:.9375rem;font-weight:500;text-decoration:none;padding:.9rem 1.5rem;border:1px solid var(--burgundy);border-radius:1px;transition:background .25s var(--ease),color .25s var(--ease)}
+.btn-primary{background:var(--burgundy);color:var(--ivory)}
+.btn-primary:hover{background:var(--burgundy-deep)}
+.btn-secondary{background:transparent;color:var(--burgundy)}
+.btn-secondary:hover{background:var(--burgundy);color:var(--ivory)}
+.btn .arrow{display:inline-block;transition:transform .3s var(--ease)}
+html[dir="ltr"] .btn:hover .arrow{transform:translateX(.25rem)}
+html[dir="rtl"] .btn:hover .arrow{transform:scaleX(-1) translateX(.25rem)}
+.link{color:var(--burgundy);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.3em;text-decoration-color:var(--rose);transition:text-decoration-color .25s}
+.link:hover{text-decoration-color:var(--burgundy)}
+.tag{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--sans);font-size:.75rem;font-weight:500;padding:.25rem .6rem;border:1px solid currentColor;letter-spacing:var(--track-label)}
+html[lang="en"] .tag{text-transform:uppercase;letter-spacing:.08em}
+.tag::before{content:"";width:.4rem;height:.4rem;border-radius:50%;background:currentColor}
+.tag.dev{color:var(--rose-ink)} .tag.live{color:var(--burgundy)} .tag.ongoing{color:var(--muted)}
+
+/* ---- Project cards ---- */
+.cards{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--s5) var(--s4)}
+.card{grid-column:span 4;text-decoration:none;display:flex;flex-direction:column;gap:var(--s2)}
+.card.feature{grid-column:span 8}
+.card.feature + .card{grid-column:span 4}
+@media (max-width:980px){ .card,.card.feature,.card.feature + .card{grid-column:span 6} .card.feature{grid-column:span 12} }
+@media (max-width:620px){ .card,.card.feature,.card.feature + .card{grid-column:span 12} }
+.cover{position:relative;aspect-ratio:4/5;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:var(--s3)}
+.card.feature .cover{aspect-ratio:16/11}
+.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.card:hover .cover > *{transition:transform .8s var(--ease)}
+.card:hover .cover .cover-art{transform:scale(1.03)}
+.cover .cover-art{position:absolute;inset:0;transition:transform 1.2s var(--ease)}
+.cover .c-num{position:relative;font-family:var(--sans);font-size:.8125rem;letter-spacing:.1em}
+.cover .c-title{position:relative;font-weight:600;line-height:1.1}
+.card-body h3{font-size:var(--fs-h3);line-height:1.3;font-weight:600;color:var(--charcoal);transition:color .25s}
+.card:hover .card-body h3{color:var(--burgundy)}
+.card-body .alt{font-family:var(--sans);font-size:.8125rem;color:var(--muted);margin-top:.2rem}
+.card-body p{font-size:1.0625rem;line-height:1.6;color:var(--charcoal);margin-top:var(--s1);max-width:34rem}
+html[lang="ar"] .card-body p{font-size:1.1875rem;line-height:1.75}
+.card-meta{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-top:var(--s2)}
+
+/* Cover treatments — typographic covers until real imagery is supplied */
+.cv-wwc{background:#1F2A30;color:#F6F1E7}
+.cv-wwc .c-title{font-family:"Reem Kufi",var(--ar-serif);font-size:clamp(2rem,1.2rem + 3vw,3.75rem);color:#F6F1E7}
+.cv-wwc .c-title em{display:block;font-family:var(--en-serif);font-style:italic;font-weight:400;font-size:.42em;color:#D9853B;margin-top:.5rem;letter-spacing:.02em}
+.cv-angle{background:var(--beige);color:var(--burgundy)}
+.cv-angle .frame{position:absolute;inset:18% 14%;border:1px solid var(--burgundy);transform:rotate(-7deg)}
+.cv-angle .frame2{position:absolute;inset:18% 14%;border:1px solid var(--rose)}
+.cv-angle .c-title{font-family:var(--ar-serif);font-size:clamp(1.9rem,1.4rem + 1.5vw,2.6rem);text-align:center;align-self:center}
+.cv-life{background:var(--burgundy);color:var(--beige)}
+.cv-life .c-title{font-family:var(--ar-serif);font-size:clamp(1.9rem,1.4rem + 1.5vw,2.6rem)}
+.cv-life .line{position:absolute;inset-inline:var(--s3);top:50%;border-top:1px dashed var(--rose)}
+.cv-mattah{background:#EADCCB;color:var(--charcoal)}
+.cv-mattah .disc{position:absolute;width:62%;aspect-ratio:1;border-radius:50%;background:var(--rose);opacity:.55;inset-inline-end:-12%;top:-10%}
+.cv-mattah .c-title{font-family:var(--ar-serif);font-size:clamp(2.2rem,1.6rem + 2vw,3rem)}
+.cv-eng{background:var(--ivory);color:var(--charcoal);border:1px solid var(--rule);
+  background-image:linear-gradient(var(--rule) 1px,transparent 1px),linear-gradient(90deg,var(--rule) 1px,transparent 1px);background-size:24px 24px}
+.cv-eng .c-title{font-family:var(--sans);font-weight:500;font-size:clamp(1.4rem,1.1rem + 1vw,1.9rem);background:var(--ivory);padding:.25rem .5rem;align-self:flex-start}
+
+/* ---- Editorial blocks ---- */
+.pull{font-size:var(--fs-h2);line-height:1.4;color:var(--burgundy);font-weight:500;max-width:46rem;padding-block:var(--s4);border-block:1px solid var(--burgundy);position:relative}
+html[lang="en"] .pull{font-style:italic;font-weight:400;line-height:1.3}
+.pull cite{display:block;margin-top:var(--s2);font-family:var(--sans);font-style:normal;font-size:.875rem;color:var(--muted)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));border-top:1px solid var(--charcoal)}
+.facts div{padding:var(--s3) var(--s2) var(--s3) 0;border-bottom:1px solid var(--rule)}
+html[dir="rtl"] .facts div{padding:var(--s3) 0 var(--s3) var(--s2)}
+.facts dt{font-family:var(--sans);font-size:.75rem;color:var(--rose-ink);letter-spacing:var(--track-label)}
+html[lang="en"] .facts dt{text-transform:uppercase}
+.facts dd{font-size:1.25rem;margin-top:.25rem;line-height:1.4}
+.placeholder{background:repeating-linear-gradient(-45deg,transparent 0 6px,rgba(185,154,158,.18) 6px 12px);border:1px dashed var(--rose);color:var(--rose-ink);padding:.15rem .5rem;font-family:var(--sans);font-size:.85em}
+.case{display:grid;grid-template-columns:minmax(0,14rem) minmax(0,1fr);gap:var(--s5)}
+.case .margin{font-family:var(--sans);font-size:.875rem;color:var(--muted);border-top:1px solid var(--charcoal);padding-top:var(--s2)}
+.case .margin b{display:block;color:var(--charcoal);font-weight:500;margin-bottom:var(--s2)}
+.case .story{max-width:var(--measure)}
+.case .story h3{font-size:var(--fs-h2);line-height:var(--head-lh);color:var(--burgundy);margin-bottom:var(--s3);font-weight:500}
+.case .story p+p{margin-top:1em}
+@media (max-width:800px){ .case{grid-template-columns:1fr;gap:var(--s3)} }
+
+/* ---- Footer ---- */
+.footer{background:var(--burgundy);color:var(--beige);margin-top:var(--s7);padding-block:var(--s6) var(--s4)}
+.footer .big{font-family:var(--serif);font-size:var(--fs-h1);line-height:1.1;color:var(--ivory)}
+.footer .row{display:flex;flex-wrap:wrap;gap:var(--s4);justify-content:space-between;margin-top:var(--s5);padding-top:var(--s3);border-top:1px solid rgba(242,234,224,.25);font-family:var(--sans);font-size:.875rem}
+.footer a{color:var(--beige);text-decoration:none}
+.footer a:hover{color:var(--rose)}
+
+/* ---- Rules list ---- */
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(18rem,1fr));gap:var(--s4)}
+.rules h3{font-family:var(--sans);font-size:.9375rem;font-weight:600;margin-bottom:var(--s2);color:var(--burgundy)}
+.rules ul{list-style:none;font-size:1.0625rem;line-height:1.6}
+html[lang="ar"] .rules ul{font-size:1.1875rem}
+.rules li{padding-block:.5rem;border-bottom:1px solid var(--rule)}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+
+<div class="spec-bar" role="region" aria-label="Specimen controls">
+  <div class="wrap">
+    <span>AHMAD SHUAIB · Design specimen v0.1 · for review, not the final site</span>
+    <span>
+      <button type="button" data-set="ar" aria-pressed="true">العربية (RTL)</button>
+      <button type="button" data-set="en" aria-pressed="false">English (LTR)</button>
+    </span>
+  </div>
+</div>
+
+<!-- ========================= ARABIC ========================= -->
+<div data-lang="ar">
+<header class="masthead">
+  <div class="wrap">
+    <a class="wordmark" href="#" aria-label="أحمد شعيب — الرئيسية">
+      <span class="ar">أحمد شعيب</span>
+      <span class="sub">أفكار · مشاريع · أثر</span>
+    </a>
+    <nav class="nav" aria-label="القائمة الرئيسية">
+      <ul>
+        <li><a href="#" aria-current="page">الرئيسية</a></li>
+        <li><a href="#">عنّي</a></li>
+        <li><a href="#">المشاريع</a></li>
+        <li><a href="#">الإصدارات</a></li>
+        <li><a href="#">أفكار ومبادرات</a></li>
+        <li><a href="#">تواصل</a></li>
+      </ul>
+      <div class="lang-switch" role="group" aria-label="اللغة"><a href="#" aria-current="true" lang="ar">ع</a><a href="#" data-set="en" lang="en">EN</a></div>
+      <button class="menu-btn" type="button">القائمة</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero" aria-labelledby="hero-ar">
+    <h1 id="hero-ar"><span>أفكار.</span><span>مشاريع.</span><span>أثر.</span></h1>
+    <aside><p>منصّة شخصية تجمع الكتابة والمبادرات الثقافية والمشاريع الفكرية والعمل الهندسي في مكان واحد.</p></aside>
+  </section>
+
+  <ol class="contents" aria-label="فهرس المشاريع">
+    <li><a href="#"><span class="num">١</span><span class="t">ما نحمله<small>WHAT WE CARRY</small></span><span class="cat">مبادرة ثقافية وإنسانية</span><span class="arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="#"><span class="num">٢</span><span class="t">من زاوية أخرى<small>FROM ANOTHER ANGLE</small></span><span class="cat">كتاب رقمي</span><span class="arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="#"><span class="num">٣</span><span class="t">حياة لم تكن كما أردنا<small>A Life Not as We Wanted</small></span><span class="cat">كتاب قيد الكتابة</span><span class="arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="#"><span class="num">٤</span><span class="t">متّة ومعنى<small>Mate &amp; Meaning</small></span><span class="cat">هوية محتوى</span><span class="arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="#"><span class="num">٥</span><span class="t">الهندسة والعمل الأكاديمي<small>Engineering &amp; Academic Work</small></span><span class="cat">هندسة مدنية</span><span class="arrow" aria-hidden="true">→</span></a></li>
+  </ol>
+
+  <div class="spec-section-title"><span class="num">A</span><h2>الخطوط</h2></div>
+  <div class="type-grid">
+    <div class="meta">Display · Markazi Text 600</div><div class="t-display">ما نحمله</div>
+    <div class="meta">H1 · Markazi Text 600</div><div class="t-h1">حياة لم تكن كما أردنا</div>
+    <div class="meta">H2 · Markazi Text 500</div><div class="t-h2">كيف نرى ما يحدث لنا، ولماذا نقارن؟</div>
+    <div class="meta">H3 · Markazi Text 600</div><div class="t-h3">حكاية تفتح الباب، وسؤال لا يغلقه</div>
+    <div class="meta">Lead · 24px / 1.55</div><div class="t-lead">نصّ تمهيدي أكبر قليلًا من المتن، يُستخدم في بداية الصفحات والمقالات.</div>
+    <div class="meta">Body · 21px / 1.85 · measure 38rem</div>
+    <div class="t-body">
+      <p>هذا نصّ تجريبي لعرض المتن العربي فقط، وليس من محتوى الموقع. اخترنا للمتن حجمًا أكبر من المعتاد ومسافة سطور واسعة، لأن الحرف العربي يحتاج إلى مساحة رأسية تتنفس فيها النقاط والحركات والأسنان.</p>
+      <p>يبقى طول السطر بين ستين وسبعين حرفًا تقريبًا، فلا تتعب العين في الانتقال من نهاية السطر إلى أوّل السطر الذي يليه. وعلامات الترقيم عربية: الفاصلة «،» والفاصلة المنقوطة «؛» وعلامة الاستفهام «؟».</p>
+    </div>
+    <div class="meta">Label · IBM Plex Sans Arabic 500</div><div><span class="label">إصدار رقمي · العربية والإنجليزية والتركية</span></div>
+  </div>
+
+  <div class="spec-section-title"><span class="num">B</span><h2>الألوان</h2></div>
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:var(--burgundy);color:var(--beige)">عنّاب</div><div class="info"><b>Deep Burgundy · #4A2635</b>Primary brand, headings, buttons. 12.2:1 on ivory</div></div>
+    <div class="sw"><div class="chip" style="background:var(--beige)">بيج</div><div class="info"><b>Warm Beige · #F2EAE0</b>Alternate sections, hover fills</div></div>
+    <div class="sw"><div class="chip" style="background:var(--ivory);border-bottom:1px solid var(--rule)">عاجي</div><div class="info"><b>Ivory · #FAF8F4</b>Page background (the "paper")</div></div>
+    <div class="sw"><div class="chip" style="background:var(--charcoal);color:var(--ivory)">فحمي</div><div class="info"><b>Charcoal · #282428</b>Body text. 14.4:1 on ivory</div></div>
+    <div class="sw"><div class="chip" style="background:var(--rose);color:var(--charcoal)">وردي</div><div class="info"><b>Muted Rose · #B99A9E</b>Decorative + large type only (2.4:1)</div></div>
+    <div class="sw"><div class="chip" style="background:var(--rose-ink);color:var(--ivory)">وردي داكن</div><div class="info"><b>Rose Ink · #7C5B61 (derived)</b>Rose for small text & labels. Passes AA</div></div>
+  </div>
+
+  <div class="spec-section-title"><span class="num">C</span><h2>الأزرار والروابط والوسوم</h2></div>
+  <div class="btn-row">
+    <a class="btn btn-primary" href="#">استكشف المشاريع <span class="arrow" aria-hidden="true">→</span></a>
+    <a class="btn btn-secondary" href="#">اقرأ عن الكتاب <span class="arrow" aria-hidden="true">→</span></a>
+    <a class="link" href="#">رابط داخل النص</a>
+  </div>
+  <div class="btn-row" style="margin-top:var(--s3)">
+    <span class="tag live">منشور</span><span class="tag dev">قيد الكتابة</span><span class="tag ongoing">مستمر</span>
+  </div>
+
+  <div class="spec-section-title"><span class="num">D</span><h2>بطاقات المشاريع</h2></div>
+  <div class="cards">
+    <a class="card feature" href="#">
+      <div class="cover cv-wwc"><span class="c-num">٠١ · مبادرة</span><span class="c-title">ما نحمله<em>What We Carry</em></span></div>
+      <div class="card-body"><h3>ما نحمله</h3><div class="alt">WHAT WE CARRY</div>
+        <p>مبادرة ثقافية وإنسانية سورية عن الهوية والانتماء والذاكرة الجمعية، تضم قصة للأطفال وكتيّبًا رقميًا للكبار.</p>
+        <div class="card-meta"><span class="tag dev">قيد الإعداد</span><span class="label">العربية · English · Türkçe</span></div></div>
+    </a>
+    <a class="card" href="#">
+      <div class="cover cv-angle"><span class="frame" aria-hidden="true"></span><span class="frame2" aria-hidden="true"></span><span class="c-num">٠٢ · كتاب رقمي</span><span class="c-title">من زاوية أخرى</span><span class="label" style="position:relative;color:var(--burgundy)">متّة ومعنى</span></div>
+      <div class="card-body"><h3>من زاوية أخرى</h3><div class="alt">FROM ANOTHER ANGLE</div>
+        <p>كتاب فكري تأمّلي عن الطريقة التي ندرك بها الواقع ونفسّر بها ما يحدث لنا.</p>
+        <div class="card-meta"><span class="tag dev">قيد التطوير</span></div></div>
+    </a>
+    <a class="card" href="#">
+      <div class="cover cv-life"><span class="line" aria-hidden="true"></span><span class="c-num">٠٣ · كتاب</span><span class="c-title">حياة لم تكن كما أردنا</span></div>
+      <div class="card-body"><h3>حياة لم تكن كما أردنا</h3><div class="alt">A LIFE NOT AS WE WANTED</div>
+        <p>مشروع كتاب طويل عن الحياة الفعلية والحياة المتخيّلة، بين علم النفس والاجتماع والفلسفة والدين.</p>
+        <div class="card-meta"><span class="tag dev">قيد الكتابة</span></div></div>
+    </a>
+    <a class="card" href="#">
+      <div class="cover cv-mattah"><span class="disc" aria-hidden="true"></span><span class="c-num">٠٤ · هوية محتوى</span><span class="c-title">متّة ومعنى</span></div>
+      <div class="card-body"><h3>متّة ومعنى</h3><div class="alt">MATE &amp; MEANING</div>
+        <p>هوية ثقافية واجتماعية تنظر إلى المألوف من زوايا مختلفة.</p>
+        <div class="card-meta"><span class="tag ongoing">مستمر</span></div></div>
+    </a>
+    <a class="card" href="#">
+      <div class="cover cv-eng"><span class="c-num">٠٥ · هندسة</span><span class="c-title">الهندسة والعمل الأكاديمي</span></div>
+      <div class="card-body"><h3>الهندسة والعمل الأكاديمي</h3><div class="alt">ENGINEERING &amp; ACADEMIC WORK</div>
+        <p>الهندسة المدنية والإنشائية، والعروض والأبحاث التقنية. <span class="placeholder">[تفاصيل يضيفها أحمد]</span></p>
+        <div class="card-meta"><span class="tag ongoing">أرشيف</span></div></div>
+    </a>
+  </div>
+
+  <div class="spec-section-title"><span class="num">E</span><h2>تخطيط دراسة الحالة</h2></div>
+  <div class="case">
+    <div class="margin">
+      <b>من زاوية أخرى</b>
+      <dl class="facts" style="grid-template-columns:1fr">
+        <div><dt>النوع</dt><dd>كتاب رقمي</dd></div>
+        <div><dt>العلامة</dt><dd>متّة ومعنى</dd></div>
+        <div><dt>الحالة</dt><dd>قيد التطوير</dd></div>
+        <div><dt>تاريخ النشر</dt><dd><span class="placeholder">[لم يُحدَّد]</span></dd></div>
+      </dl>
+    </div>
+    <div class="story">
+      <h3>الواقع نفسه، بعيون مختلفة</h3>
+      <p>يستكشف الكتاب كيف يدرك الناس الواقع، وكيف يفسّرون المواقف، ولماذا يقارنون حياتهم الفعلية ببدائل متخيّلة.</p>
+      <p>يجمع أسلوبه بين حكاية افتتاحية، وتحليل عميق بلغة قريبة، وزوايا نظر متعددة، وأسئلة تدفع إلى التفكير، وخاتمة تأمّلية.</p>
+      <blockquote class="pull" style="margin-top:var(--s5)">«هنا يظهر اقتباس من الكتاب حين يختاره المؤلف.»<cite>اقتباس تجريبي — ليس من نص الكتاب</cite></blockquote>
+    </div>
+  </div>
+
+  <div class="spec-section-title"><span class="num">F</span><h2>قواعد التصميم العربي والإنجليزي</h2></div>
+  <div class="rules">
+    <div><h3>العربية</h3><ul>
+      <li>لا تباعد بين الحروف أبدًا، ولا خط مائل.</li>
+      <li>التأكيد بالوزن أو اللون، لا بالإمالة.</li>
+      <li>المتن ٢١ بكسل، ومسافة السطور ١٫٨٥.</li>
+      <li>علامات ترقيم عربية، وعلامات تنصيص « ».</li>
+      <li>الأسهم والأيقونات الاتجاهية تنعكس تلقائيًا.</li>
+    </ul></div>
+    <div><h3>English</h3><ul style="direction:ltr;text-align:left;font-family:var(--en-serif)">
+      <li>Small-caps tracking only on labels, never on body.</li>
+      <li>Italic for emphasis, titles and pull quotes.</li>
+      <li>Body 18px / 1.65; paragraphs indented, not spaced.</li>
+      <li>Curly quotes “ ” and true em dashes —.</li>
+      <li>Same grid, mirrored with logical CSS properties.</li>
+    </ul></div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <p class="big">لنعمل معًا على فكرة تستحق.</p>
+    <a class="btn btn-secondary" href="#" style="margin-top:var(--s4);border-color:var(--beige);color:var(--beige)">تواصل <span class="arrow" aria-hidden="true">→</span></a>
+    <div class="row"><span>© أحمد شعيب</span><span><a href="#">المشاريع</a> · <a href="#">الإصدارات</a> · <a href="#">تواصل</a></span></div>
+  </div>
+</footer>
+</div>
+
+<!-- ========================= ENGLISH ========================= -->
+<div data-lang="en" hidden>
+<header class="masthead">
+  <div class="wrap">
+    <a class="wordmark" href="#" aria-label="Ahmad Shuaib — home">
+      <span class="en">AHMAD SHUAIB</span>
+      <span class="sub">Ideas · Projects · Impact</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <ul>
+        <li><a href="#" aria-current="page">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Projects</a></li>
+        <li><a href="#">Publications</a></li>
+        <li><a href="#">Ideas &amp; Initiatives</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <div class="lang-switch" role="group" aria-label="Language"><a href="#" data-set="ar" lang="ar">ع</a><a href="#" aria-current="true" lang="en">EN</a></div>
+      <button class="menu-btn" type="button">Menu</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero" aria-labelledby="hero-en">
+    <h1 id="hero-en"><span>Ideas.</span><span>Projects.</span><span>Impact.</span></h1>
+    <aside><p>A personal platform bringing together writing, cultural initiatives, intellectual projects and engineering work in one place.</p></aside>
+  </section>
+
+  <ol class="contents" aria-label="Project index">
+    <li><a href="#"><span class="num">01</span><span class="t">What We Carry<small>ما نحمله</small></span><span class="cat">Cultural &amp; humanitarian initiative</span><span class="arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="#"><span class="num">02</span><span class="t">From Another Angle<small>من زاوية أخرى</small></span><span class="cat">Digital book</span><span class="arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="#"><span class="num">03</span><span class="t">A Life Not as We Wanted<small>حياة لم تكن كما أردنا</small></span><span class="cat">Book in development</span><span class="arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="#"><span class="num">04</span><span class="t">Mate &amp; Meaning<small>متّة ومعنى</small></span><span class="cat">Content identity</span><span class="arrow" aria-hidden="true">→</span></a></li>
+    <li><a href="#"><span class="num">05</span><span class="t">Engineering &amp; Academic Work<small>الهندسة والعمل الأكاديمي</small></span><span class="cat">Civil engineering</span><span class="arrow" aria-hidden="true">→</span></a></li>
+  </ol>
+
+  <div class="spec-section-title"><span class="num">A</span><h2>Typography</h2></div>
+  <div class="type-grid">
+    <div class="meta">Display · Newsreader 600</div><div class="t-display">What We Carry</div>
+    <div class="meta">H1 · Newsreader 600</div><div class="t-h1">A Life Not as We Wanted</div>
+    <div class="meta">H2 · Newsreader 500</div><div class="t-h2">How we see what happens to us, and why we compare</div>
+    <div class="meta">H3 · Newsreader 600</div><div class="t-h3">A story opens the door; a question keeps it open</div>
+    <div class="meta">Lead · 24px / 1.55</div><div class="t-lead">A slightly larger introductory text, used at the start of pages and essays.</div>
+    <div class="meta">Body · 18px / 1.65 · measure 38rem</div>
+    <div class="t-body">
+      <p>This is sample text to show the English body style only; it is not site content. The serif is designed for long reading on screens, with optical sizes that sharpen headlines and soften body text.</p>
+      <p>Lines stay between sixty and seventy-five characters, so the eye moves comfortably from the end of one line to the start of the next — the rhythm of a well-set book page.</p>
+    </div>
+    <div class="meta">Label · IBM Plex Sans 500</div><div><span class="label">Digital edition · Arabic, English, Turkish</span></div>
+  </div>
+
+  <div class="spec-section-title"><span class="num">B</span><h2>Colour</h2></div>
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:var(--burgundy);color:var(--beige)">Burgundy</div><div class="info"><b>Deep Burgundy · #4A2635</b>Primary brand, headings, buttons. 12.2:1 on ivory</div></div>
+    <div class="sw"><div class="chip" style="background:var(--beige)">Beige</div><div class="info"><b>Warm Beige · #F2EAE0</b>Alternate sections, hover fills</div></div>
+    <div class="sw"><div class="chip" style="background:var(--ivory);border-bottom:1px solid var(--rule)">Ivory</div><div class="info"><b>Ivory · #FAF8F4</b>Page background (the "paper")</div></div>
+    <div class="sw"><div class="chip" style="background:var(--charcoal);color:var(--ivory)">Charcoal</div><div class="info"><b>Charcoal · #282428</b>Body text. 14.4:1 on ivory</div></div>
+    <div class="sw"><div class="chip" style="background:var(--rose);color:var(--charcoal)">Rose</div><div class="info"><b>Muted Rose · #B99A9E</b>Decorative + large type only (2.4:1)</div></div>
+    <div class="sw"><div class="chip" style="background:var(--rose-ink);color:var(--ivory)">Rose ink</div><div class="info"><b>Rose Ink · #7C5B61 (derived)</b>Rose for small text & labels. Passes AA</div></div>
+  </div>
+
+  <div class="spec-section-title"><span class="num">C</span><h2>Buttons, links &amp; tags</h2></div>
+  <div class="btn-row">
+    <a class="btn btn-primary" href="#">Explore the projects <span class="arrow" aria-hidden="true">→</span></a>
+    <a class="btn btn-secondary" href="#">About the book <span class="arrow" aria-hidden="true">→</span></a>
+    <a class="link" href="#">An inline link</a>
+  </div>
+  <div class="btn-row" style="margin-top:var(--s3)">
+    <span class="tag live">Published</span><span class="tag dev">In development</span><span class="tag ongoing">Ongoing</span>
+  </div>
+
+  <div class="spec-section-title"><span class="num">D</span><h2>Project cards</h2></div>
+  <div class="cards">
+    <a class="card feature" href="#">
+      <div class="cover cv-wwc"><span class="c-num">01 · INITIATIVE</span><span class="c-title">ما نحمله<em>What We Carry</em></span></div>
+      <div class="card-body"><h3>What We Carry</h3><div class="alt">ما نحمله</div>
+        <p>A Syrian cultural and humanitarian initiative on identity, belonging and collective memory — including a children's story and a digital booklet for adults.</p>
+        <div class="card-meta"><span class="tag dev">In preparation</span><span class="label">Arabic · English · Turkish</span></div></div>
+    </a>
+    <a class="card" href="#">
+      <div class="cover cv-angle"><span class="frame" aria-hidden="true"></span><span class="frame2" aria-hidden="true"></span><span class="c-num">02 · DIGITAL BOOK</span><span class="c-title" style="font-family:var(--en-serif);font-style:italic">From Another Angle</span><span class="label" style="position:relative;color:var(--burgundy)">Mate &amp; Meaning</span></div>
+      <div class="card-body"><h3>From Another Angle</h3><div class="alt">من زاوية أخرى</div>
+        <p>A reflective book on how we perceive reality and interpret what happens to us.</p>
+        <div class="card-meta"><span class="tag dev">In development</span></div></div>
+    </a>
+    <a class="card" href="#">
+      <div class="cover cv-life"><span class="line" aria-hidden="true"></span><span class="c-num">03 · BOOK</span><span class="c-title" style="font-family:var(--en-serif)">A Life Not as We Wanted</span></div>
+      <div class="card-body"><h3>A Life Not as We Wanted</h3><div class="alt">حياة لم تكن كما أردنا</div>
+        <p>A long-form book on the lives we have and the lives we imagine — through psychology, society, philosophy and faith.</p>
+        <div class="card-meta"><span class="tag dev">Being written</span></div></div>
+    </a>
+    <a class="card" href="#">
+      <div class="cover cv-mattah"><span class="disc" aria-hidden="true"></span><span class="c-num">04 · CONTENT IDENTITY</span><span class="c-title">متّة ومعنى</span></div>
+      <div class="card-body"><h3>Mate &amp; Meaning</h3><div class="alt">متّة ومعنى</div>
+        <p>A cultural and social identity that looks at familiar things from different angles.</p>
+        <div class="card-meta"><span class="tag ongoing">Ongoing</span></div></div>
+    </a>
+    <a class="card" href="#">
+      <div class="cover cv-eng"><span class="c-num">05 · ENGINEERING</span><span class="c-title">Engineering &amp; Academic Work</span></div>
+      <div class="card-body"><h3>Engineering &amp; Academic Work</h3><div class="alt">الهندسة والعمل الأكاديمي</div>
+        <p>Civil and structural engineering, presentations and technical research. <span class="placeholder">[details from Ahmad]</span></p>
+        <div class="card-meta"><span class="tag ongoing">Archive</span></div></div>
+    </a>
+  </div>
+
+  <div class="spec-section-title"><span class="num">E</span><h2>Case study layout</h2></div>
+  <div class="case">
+    <div class="margin">
+      <b>From Another Angle</b>
+      <dl class="facts" style="grid-template-columns:1fr">
+        <div><dt>Type</dt><dd>Digital book</dd></div>
+        <div><dt>Imprint</dt><dd>Mate &amp; Meaning</dd></div>
+        <div><dt>Status</dt><dd>In development</dd></div>
+        <div><dt>Publication date</dt><dd><span class="placeholder">[not set]</span></dd></div>
+      </dl>
+    </div>
+    <div class="story">
+      <h3>The same reality, seen through different eyes</h3>
+      <p>The book explores how people perceive reality, interpret situations, and compare their actual lives with imagined alternatives.</p>
+      <p>Its approach combines an opening story, accessible but deep analysis, multiple perspectives, thought-provoking questions and a reflective conclusion.</p>
+      <blockquote class="pull" style="margin-top:var(--s5)">“A passage from the book appears here once the author chooses one.”<cite>Sample quote — not from the book</cite></blockquote>
+    </div>
+  </div>
+
+  <div class="spec-section-title"><span class="num">F</span><h2>Arabic &amp; English design rules</h2></div>
+  <div class="rules">
+    <div><h3>English</h3><ul>
+      <li>Small-caps tracking only on labels, never on body.</li>
+      <li>Italic for emphasis, titles and pull quotes.</li>
+      <li>Body 18px / 1.65; paragraphs indented, not spaced.</li>
+      <li>Curly quotes “ ” and true em dashes —.</li>
+      <li>Same grid, mirrored with logical CSS properties.</li>
+    </ul></div>
+    <div><h3>العربية</h3><ul dir="rtl" lang="ar" style="font-family:var(--ar-serif);font-size:1.1875rem;line-height:1.85">
+      <li>لا تباعد بين الحروف أبدًا، ولا خط مائل.</li>
+      <li>التأكيد بالوزن أو اللون، لا بالإمالة.</li>
+      <li>المتن ٢١ بكسل، ومسافة السطور ١٫٨٥.</li>
+      <li>علامات ترقيم عربية، وعلامات تنصيص « ».</li>
+      <li>الأسهم والأيقونات الاتجاهية تنعكس تلقائيًا.</li>
+    </ul></div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <p class="big">Let’s work on an idea worth pursuing.</p>
+    <a class="btn btn-secondary" href="#" style="margin-top:var(--s4);border-color:var(--beige);color:var(--beige)">Get in touch <span class="arrow" aria-hidden="true">→</span></a>
+    <div class="row"><span>© Ahmad Shuaib</span><span><a href="#">Projects</a> · <a href="#">Publications</a> · <a href="#">Contact</a></span></div>
+  </div>
+</footer>
+</div>
+
+<script>
+  function setLang(l){
+    document.documentElement.lang = l;
+    document.documentElement.dir = l === 'ar' ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-lang]').forEach(function(el){ el.hidden = el.dataset.lang !== l; });
+    document.querySelectorAll('.spec-bar button').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.set === l); });
+  }
+  document.addEventListener('click', function(e){
+    var t = e.target.closest('[data-set]');
+    if(t){ e.preventDefault(); setLang(t.dataset.set); window.scrollTo(0,0); }
+  });
+</script>
+</body>
+</html>
